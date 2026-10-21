@@ -758,7 +758,7 @@ OMM.registerModule({
         "32 s"
       ],
       "answer": 0,
-      "level": 3,
+      "level": 2,
       "lesson": "m14-l2",
       "explain": "45,000 × 8 = 360,000 bits, and 360,000 ÷ 14,400 = 25 s. The value 3.1 s forgets to multiply bytes by 8 to get bits."
     },
@@ -926,7 +926,7 @@ OMM.registerModule({
         "About 260 MB"
       ],
       "answer": 1,
-      "level": 3,
+      "level": 2,
       "lesson": "m14-l3",
       "explain": "2,480 × 3,508 is about 8.7 million pixels, and × 3 bytes gives about 26 million bytes. The figure 8.7 MB counts only one byte per pixel, which is a grey scan, not colour."
     },
@@ -996,7 +996,7 @@ OMM.registerModule({
         "9"
       ],
       "answer": 3,
-      "level": 3,
+      "level": 2,
       "lesson": "m14-l4",
       "explain": "Each sheet folded once gives 4 pages, so 36 ÷ 4 = 9 sheets. The value 18 would be correct only if each sheet gave just 2 pages, which is not the case for a folded sheet."
     },
@@ -1052,7 +1052,7 @@ OMM.registerModule({
         "About 80 g"
       ],
       "answer": 1,
-      "level": 3,
+      "level": 2,
       "lesson": "m14-l5",
       "explain": "The area is 0.06237 m², and × 80 g/m² gives about 4.99 g. The value 10 g is about the mass of an A3 sheet of the same paper, which has twice the area."
     },
@@ -1080,7 +1080,7 @@ OMM.registerModule({
         "The stapler will be disabled for every job until the tray is reset"
       ],
       "answer": 0,
-      "level": 3,
+      "level": 2,
       "lesson": "m14-l5",
       "explain": "The length is 297 − 279.4 = 17.6 mm shorter and the width is 5.9 mm wider, which the machine can detect as a size or timing fault. A small difference does not mean the machine ignores it."
     },

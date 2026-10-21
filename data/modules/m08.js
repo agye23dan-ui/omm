@@ -57,7 +57,7 @@ OMM.registerModule({
         },
         {
           "t": "formula",
-          "text": "128  64  32  16  8  4  2  1",
+          "text": "128 64 32 16 8 4 2 1",
           "caption": "Place values of an 8-bit number"
         },
         {

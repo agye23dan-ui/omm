@@ -716,12 +716,12 @@ OMM.registerModule({
       "q": "Why can a dot-matrix printer make several copies at once on multipart forms?",
       "options": [
         "It strikes the paper, so the impact marks through each layer",
-        "It heats the layers so that the ink melts through",
+        "It heats every layer of the form so that the ink melts through to the copies",
         "It sprays extra ink that soaks into the layers",
         "It uses a stronger laser beam than other printers"
       ],
       "answer": 0,
-      "level": 2,
+      "level": 1,
       "lesson": "m12-l1",
       "explain": "A dot-matrix printer is an impact printer, and the force carries the mark through the sheets. Heat and laser light do not mark through several layers."
     },
@@ -749,7 +749,7 @@ OMM.registerModule({
         "850 × 1100 pixels"
       ],
       "answer": 1,
-      "level": 3,
+      "level": 2,
       "lesson": "m12-l1",
       "explain": "Multiply each side by 300: 8.5 × 300 = 2550 and 11 × 300 = 3300. The value 5100 × 6600 is the size at 600 dpi."
     },
@@ -800,12 +800,12 @@ OMM.registerModule({
       "q": "What does the laser beam or LED array do during exposure?",
       "options": [
         "Melts the toner so that it sticks to the drum",
-        "Gives the drum an even charge over its whole surface",
+        "Gives the drum an even charge over its whole surface before the image is written",
         "Switches off the charge on the drum where the page will print",
         "Heats the paper before it meets the transfer roller"
       ],
       "answer": 2,
-      "level": 2,
+      "level": 1,
       "lesson": "m12-l2",
       "explain": "The light removes charge in the image areas, which makes the latent image. The even charge comes earlier, from the charge roller or corona."
     },
@@ -829,7 +829,7 @@ OMM.registerModule({
       "options": [
         "Pull the sheet out quickly while the machine is still running",
         "Switch off, unplug, and wait for the fuser to cool before reaching in",
-        "Hold the cover switch closed so that the machine keeps running",
+        "Hold the cover switch closed so that the machine keeps running and the job can finish",
         "Spray the fuser with cleaning fluid to cool it down quickly"
       ],
       "answer": 1,
@@ -861,7 +861,7 @@ OMM.registerModule({
         "It spreads a thin layer of toner on the developer roller"
       ],
       "answer": 0,
-      "level": 2,
+      "level": 1,
       "lesson": "m12-l2",
       "explain": "The transfer roller creates an electric field that attracts toner to the paper. Pressing with heat is the fuser, and scraping is the cleaning blade."
     },
@@ -884,7 +884,7 @@ OMM.registerModule({
       "q": "What does a cleaning cycle on an inkjet printer do?",
       "options": [
         "It pushes ink through the nozzles to clear blockages",
-        "It aligns the head for left-to-right passes",
+        "It aligns the head for left-to-right and right-to-left passes of the carriage",
         "It dries the paper before it is printed",
         "It resets the page counter to zero"
       ],
@@ -912,7 +912,7 @@ OMM.registerModule({
       "q": "What does a full waste ink pad usually cause?",
       "options": [
         "The print head is no longer capped when idle",
-        "The cartridges stop being recognised by the printer",
+        "The cartridges stop being recognised by the printer until they are reseated",
         "The nozzles block more often than before",
         "The printer stops with an error so that ink does not leak"
       ],
@@ -1057,7 +1057,7 @@ OMM.registerModule({
         "2,073,600"
       ],
       "answer": 3,
-      "level": 3,
+      "level": 2,
       "lesson": "m12-l4",
       "explain": "1920 × 1080 = 2,073,600. The value 1,036,800 is half of that, and 4,147,200 is double."
     },
@@ -1113,7 +1113,7 @@ OMM.registerModule({
         "About 24 mm"
       ],
       "answer": 1,
-      "level": 3,
+      "level": 2,
       "lesson": "m12-l5",
       "explain": "Circumference = π × 24 ≈ 75.4 mm. The value 38 mm is π × 12, which uses the radius by mistake. The mark repeats once per turn, not at the diameter."
     },
@@ -1136,7 +1136,7 @@ OMM.registerModule({
       "q": "A printer jams in the same place in the paper path again and again. What do you inspect first?",
       "options": [
         "The main circuit board, because jams come from software",
-        "The installed printer driver, because jams come from bad drivers",
+        "The installed printer driver, because jams so often come from bad drivers or old print settings",
         "The rollers and guides at that point, for wear, dirt or an obstruction",
         "The toner level, because low toner causes jams"
       ],
@@ -1169,7 +1169,7 @@ OMM.registerModule({
         "12,550"
       ],
       "answer": 3,
-      "level": 3,
+      "level": 2,
       "lesson": "m12-l6",
       "explain": "100,000 − 87,450 = 12,550. The value 187,450 adds the numbers together instead of subtracting."
     },

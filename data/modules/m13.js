@@ -863,7 +863,7 @@ OMM.registerModule({
         "285 mm"
       ],
       "answer": 1,
-      "level": 3,
+      "level": 2,
       "lesson": "m13-l3",
       "explain": "The copy length is 200 mm × 0.70 = 140 mm. The value 285 mm comes from dividing by 0.7, which would enlarge the line instead of reducing it."
     },
@@ -877,7 +877,7 @@ OMM.registerModule({
         "2400 pixels"
       ],
       "answer": 2,
-      "level": 3,
+      "level": 2,
       "lesson": "m13-l3",
       "explain": "The scanner takes 600 pixels per inch, so 2 inches gives 600 × 2 = 1200 pixels. Only a single inch gives 600 pixels."
     },
@@ -1031,7 +1031,7 @@ OMM.registerModule({
         "0.05 s"
       ],
       "answer": 3,
-      "level": 3,
+      "level": 2,
       "lesson": "m13-l5",
       "explain": "Time = width ÷ speed = 6 mm ÷ 120 mm/s = 0.05 s. Dividing the speed by the width gives 20, which has the wrong units and is not a time."
     },

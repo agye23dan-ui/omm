@@ -190,7 +190,7 @@ OMM.registerModule({
         },
         {
           "t": "formula",
-          "text": "P = I² × R     P = V² ÷ R"
+          "text": "P = I² × R, or P = V² ÷ R"
         },
         {
           "t": "example",

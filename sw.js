@@ -1,11 +1,13 @@
 /* Service worker. Generated into sw.js by scripts/build.js, which fills in VERSION and FILES. */
 'use strict';
 
-var VERSION = '7e8e9295df41';
+var VERSION = '630c71962dd4';
 var CACHE = 'omm-' + VERSION;
 var FILES = [
   "css/app.css",
   "data/build.js",
+  "data/cases/m01.js",
+  "data/cases/m02.js",
   "data/cases/m03.js",
   "data/cases/m04.js",
   "data/cases/m05.js",
@@ -20,6 +22,7 @@ var FILES = [
   "data/cases/m14.js",
   "data/cases/m15.js",
   "data/cases/m16.js",
+  "data/cases/m17.js",
   "data/cases/m18.js",
   "data/course.js",
   "data/index.js",

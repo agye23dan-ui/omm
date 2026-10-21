@@ -708,7 +708,7 @@ OMM.registerModule({
       "options": [
         "It will work because FAT32 has no limit on the size of one file",
         "It will fail because FAT32 cannot hold a single file of 4 GiB or more",
-        "It will work, but only if the file is first compressed into a ZIP",
+        "It will work, but only if the file is first compressed into a ZIP archive on the same drive",
         "It will work, but the file will be marked read-only by the system"
       ],
       "answer": 1,
@@ -763,11 +763,11 @@ OMM.registerModule({
       "q": "Which of these is a real backup of a customer's documents?",
       "options": [
         "A second folder on the same hard drive",
-        "A shortcut to the folder on the desktop",
         "A copy on a separate external drive, checked by opening some files",
+        "A shortcut to the folder on the desktop",
         "The recycle bin"
       ],
-      "answer": 2,
+      "answer": 1,
       "level": 2,
       "lesson": "m09-l2",
       "explain": "A real backup is on a separate device and has been tested. A second folder on the same drive is lost together with the original if the drive fails."
@@ -776,7 +776,7 @@ OMM.registerModule({
       "id": "m09-q12",
       "q": "You copy a folder of 1,250 files from a customer's drive to a backup drive. The copy shows 1,243 files. What should you do?",
       "options": [
-        "Accept the copy because a difference of seven files is small",
+        "Accept the copy because a difference of seven files is small and probably unimportant",
         "Delete the original so that the two file counts match",
         "Compress the backup to make it smaller, then count again",
         "Find the missing files and copy them before you start the repair"
@@ -875,7 +875,7 @@ OMM.registerModule({
       "q": "What does the command ping 192.168.1.1 do?",
       "options": [
         "It sends test messages and shows whether that address replies",
-        "It deletes the device that has that address from the network",
+        "It deletes the device that has that address from the network and frees the address",
         "It installs a driver for the device that has that address",
         "It copies the files from that address to your computer"
       ],
@@ -931,7 +931,7 @@ OMM.registerModule({
       "q": "After a driver update, a printer that used to work gives errors. What can you do to return quickly to the earlier state?",
       "options": [
         "Roll back to the previous driver",
-        "Format the computer's drive",
+        "Format the computer's drive and reinstall the operating system",
         "Replace the printer",
         "Delete the user's profile"
       ],
@@ -946,7 +946,7 @@ OMM.registerModule({
       "options": [
         "Explain that you cannot install unlicensed software and suggest a licence",
         "Install it, because the customer owns the computer and its contents",
-        "Install it if the customer promises to buy a licence at a later date",
+        "Install it if the customer promises to buy a licence at a later date and signs a note",
         "Install it, but remove the licence check so that no one can notice"
       ],
       "answer": 0,
@@ -959,11 +959,11 @@ OMM.registerModule({
       "q": "A low-cost printer is described as host-based. What does that mean?",
       "options": [
         "It can only print from a server that is kept in another building",
-        "It stores every page in its own memory before any printing starts",
         "The computer builds the page and sends finished image data to the printer",
+        "It stores every page in its own memory before any printing starts",
         "It works without any driver because the printer does all the work"
       ],
-      "answer": 2,
+      "answer": 1,
       "level": 2,
       "lesson": "m09-l4",
       "explain": "In a host-based printer the computer does the page processing, so it works only with the maker's driver. A generic driver is usually not enough."
@@ -972,7 +972,7 @@ OMM.registerModule({
       "id": "m09-q26",
       "q": "What is the principle of least privilege?",
       "options": [
-        "Every user should share the same administrator login",
+        "Every user should share the same administrator login so that nothing is ever blocked",
         "Remove all passwords to make logging in much faster",
         "Give each user only the rights they need for their work",
         "Allow only one account on each computer"

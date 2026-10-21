@@ -724,7 +724,7 @@ OMM.registerModule({
       "options": [
         "To record the request in writing so nothing depends on memory",
         "To tell the customer the final price of the repair",
-        "To prove that the technician has finished the repair",
+        "To prove that the technician has finished the repair and can be paid for it",
         "To order the parts from the supplier automatically"
       ],
       "answer": 0,
@@ -835,7 +835,7 @@ OMM.registerModule({
       "q": "You recommended replacing a worn fuser, and the customer declined because of cost. What should the report show?",
       "options": [
         "Nothing, because no work was done on the fuser",
-        "Only that the machine was working when you left",
+        "Only that the machine was working when you left the customer's site",
         "The price list for fusers",
         "Your recommendation and that the customer declined it"
       ],
@@ -876,7 +876,7 @@ OMM.registerModule({
       "id": "m17-q12",
       "q": "What does the reorder level of a part mean?",
       "options": [
-        "The most of that part you can store on the shelf",
+        "The most of that part you can store on the shelf at one time, by space",
         "The price at which the supplier sells the part",
         "The number of that part used on the last job",
         "The stock quantity at which you must place a new order"

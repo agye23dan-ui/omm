@@ -800,7 +800,7 @@ OMM.registerModule({
         "To discharge the power supply capacitors before you open the case"
       ],
       "answer": 1,
-      "level": 2,
+      "level": 1,
       "lesson": "m11-l2",
       "explain": "The strap equalises charge between you and the equipment. It is not a shock protection device and it does not discharge a power supply."
     },
@@ -856,7 +856,7 @@ OMM.registerModule({
         "It cools the chip directly by evaporating as the processor heats up"
       ],
       "answer": 2,
-      "level": 2,
+      "level": 1,
       "lesson": "m11-l2",
       "explain": "Surfaces that look flat have microscopic gaps full of air, which conducts heat badly. Paste replaces the air. It is not glue and too much can make things worse."
     },
@@ -1052,7 +1052,7 @@ OMM.registerModule({
         "Three passwords, two accounts, one administrator to look after them"
       ],
       "answer": 0,
-      "level": 2,
+      "level": 1,
       "lesson": "m11-l4",
       "explain": "The rule spreads the risk. Different media protect against one type of failure and an off-site copy protects against fire or theft."
     },
@@ -1150,7 +1150,7 @@ OMM.registerModule({
         "It switches off the operating system licence"
       ],
       "answer": 0,
-      "level": 2,
+      "level": 1,
       "lesson": "m11-l5",
       "explain": "The firmware chip is being rewritten, and an interruption can leave it unusable. Customer files are not normally affected, which is why the data backup is advice, not a cure."
     },

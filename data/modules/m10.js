@@ -28,7 +28,7 @@ OMM.registerModule({
       "body": [
         {
           "t": "p",
-          "text": "This lesson explains the basic ideas of a computer network: how devices are addressed and how they get their addresses. Almost every copier, printer and multifunction product you install is a network device, so you need these ideas every working day."
+          "text": "This lesson explains the basic ideas of a computer network: how devices are addressed and how they get their addresses. Almost every copier, printer and multifunction product you install is a network device."
         },
         {
           "t": "h",
@@ -36,11 +36,11 @@ OMM.registerModule({
         },
         {
           "t": "p",
-          "text": "A **LAN** (local area network) joins devices in one building or one office. A **WAN** (wide area network) joins LANs over long distances, for example through an internet provider. A printer and a PC in the same office are on the same LAN."
+          "text": "A **LAN** (local area network) joins devices in one building or office. A **WAN** (wide area network) joins LANs over long distances, for example through an internet provider. A printer and a PC in the same office are on the same LAN."
         },
         {
           "t": "p",
-          "text": "A **client** asks for a service, such as a PC that wants to print. A **server** supplies it, such as a print server or mail server. A copier can be both: a server when users send it jobs, and a client when it sends a scan to a mail server."
+          "text": "A **client** asks for a service, such as a PC that wants to print. A **server** supplies it, such as a print server or mail server. A copier can be both: a server for print jobs and a client when it sends a scan."
         },
         {
           "t": "h",
@@ -48,11 +48,11 @@ OMM.registerModule({
         },
         {
           "t": "p",
-          "text": "An **IP address** identifies a device on a network. An IPv4 address is four numbers from 0 to 255 separated by dots, such as `192.168.1.20`. It is 32 bits long. A **MAC address** is a different number, fixed in the hardware when it is made. It has 48 bits, written as 12 hexadecimal digits, and identifies the hardware on the local network. The IP address says where the device sits in the network and can be changed."
+          "text": "An **IP address** identifies a device on a network. An IPv4 address is four numbers from 0 to 255 separated by dots, such as `192.168.1.20`. A **MAC address** is a different number, fixed in the hardware when it is made. It is written as 12 hexadecimal digits and identifies the hardware on the local network. The IP address says where the device sits in the network and can be changed."
         },
         {
           "t": "p",
-          "text": "The **subnet mask** shows which part of an IP address names the network and which part names the device. Where the mask has 1 bits, the address is network. Where it has 0 bits, the address is host. The **CIDR** short form counts the 1 bits: `255.255.255.0` has 24 of them, so it is written `/24`."
+          "text": "The **subnet mask** shows which part of an IP address names the network and which part names the device. Mask 1 bits mark the network part and 0 bits mark the device part. The **CIDR** short form counts the 1 bits: `255.255.255.0` has 24 of them, so it is written `/24`."
         },
         {
           "t": "formula",
@@ -122,7 +122,7 @@ OMM.registerModule({
         {
           "t": "note",
           "kind": "key",
-          "text": "Two devices talk directly only when their addresses are in the same subnet. A wrong mask on one device makes it look for a router it does not need, or miss one it does."
+          "text": "Two devices talk directly only when their addresses are in the same subnet. A wrong mask makes a device look for a router it does not need, or miss one it does."
         },
         {
           "t": "h",
@@ -134,12 +134,12 @@ OMM.registerModule({
         },
         {
           "t": "p",
-          "text": "**DNS** (Domain Name System) turns a name such as a mail server name into an IP address. The **default gateway** is the router address a device uses to reach other networks. Private ranges are used inside offices: `10.x.x.x`, `172.16.x.x` to `172.31.x.x` and `192.168.x.x`."
+          "text": "**DNS** (Domain Name System) turns a name into an IP address. The **default gateway** is the router address a device uses to reach other networks. Private ranges are used inside offices: `10.x.x.x`, `172.16.x.x` to `172.31.x.x` and `192.168.x.x`."
         },
         {
           "t": "note",
           "kind": "tip",
-          "text": "Give a shared printer a static address outside the DHCP range, or a reservation in the router. If its address changes, every PC that prints to it stops working."
+          "text": "Give a shared printer a static address outside the DHCP range, or a router reservation. If its address changes, every PC that prints to it stops."
         },
         {
           "t": "h",
@@ -147,7 +147,7 @@ OMM.registerModule({
         },
         {
           "t": "p",
-          "text": "Network software works in layers. The link layer moves bits over cable or radio. The internet layer (IP) moves packets between networks. The transport layer (TCP or UDP) uses a **port** number to reach the right program. The application layer holds printing, mail and web services. When you test a network, work upward through these layers."
+          "text": "Network software works in layers. The link layer moves bits over cable or radio. The internet layer (IP) moves packets between networks. The transport layer (TCP or UDP) uses a **port** number to reach the right program. The application layer holds printing, mail and web services. Test a network from the bottom layer upward."
         },
         {
           "t": "diagram",

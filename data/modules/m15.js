@@ -937,7 +937,7 @@ OMM.registerModule({
         "12.75"
       ],
       "answer": 2,
-      "level": 3,
+      "level": 2,
       "lesson": "m15-l3",
       "explain": "0.750 × 12.00 = 9.00. Dividing 12.00 by 0.750 gives 16.00 and adding the numbers gives 12.75. Neither matches the rule weight × price per kg."
     },
@@ -1021,7 +1021,7 @@ OMM.registerModule({
         "92.00"
       ],
       "answer": 3,
-      "level": 3,
+      "level": 2,
       "lesson": "m15-l4",
       "explain": "Tax = 80.00 × 0.15 = 12.00, so the total is 92.00. The 12.00 figure is only the tax, not the total."
     },
@@ -1035,7 +1035,7 @@ OMM.registerModule({
         "13.50"
       ],
       "answer": 0,
-      "level": 3,
+      "level": 2,
       "lesson": "m15-l4",
       "explain": "Net price = 115.00 ÷ 1.15 = 100.00, so the tax is 15.00. Taking 15% of 115.00 gives 17.25, which wrongly treats 115.00 as the price before tax."
     },
@@ -1049,7 +1049,7 @@ OMM.registerModule({
         "410.00"
       ],
       "answer": 2,
-      "level": 3,
+      "level": 2,
       "lesson": "m15-l4",
       "explain": "50.00 + 430.00 − 20.00 = 460.00. The payout is taken away, and the float is added. The tempting 480.00 forgets the payout."
     },
@@ -1063,7 +1063,7 @@ OMM.registerModule({
         "86.00"
       ],
       "answer": 3,
-      "level": 3,
+      "level": 2,
       "lesson": "m15-l4",
       "explain": "Tax = 60.00 × 0.10 = 6.00, so the total is 60.00 + 20.00 + 6.00 = 86.00. The tempting 88.00 taxes all 80.00."
     },

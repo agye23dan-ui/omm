@@ -65,7 +65,23 @@ window.OMM.index = {
    "words": 2930,
    "quiz": 33,
    "cards": 28,
-   "cases": []
+   "cases": [
+    {
+     "id": "m01-d1",
+     "title": "Toner spilled inside a customer's printer",
+     "level": 1
+    },
+    {
+     "id": "m01-d2",
+     "title": "Replacement board fails after one week",
+     "level": 2
+    },
+    {
+     "id": "m01-d3",
+     "title": "Customer feels a tingle from a copier",
+     "level": 3
+    }
+   ]
   },
   "m02": {
    "id": "m02",
@@ -107,10 +123,26 @@ window.OMM.index = {
     }
    ],
    "minutes": 60,
-   "words": 2949,
+   "words": 2923,
    "quiz": 32,
    "cards": 30,
-   "cases": []
+   "cases": [
+    {
+     "id": "m02-d1",
+     "title": "Meter reads zero on a live socket",
+     "level": 1
+    },
+    {
+     "id": "m02-d2",
+     "title": "Resistor reads far too low in the circuit",
+     "level": 2
+    },
+    {
+     "id": "m02-d3",
+     "title": "Oscilloscope shows ripple ten times too large",
+     "level": 3
+    }
+   ]
   },
   "m03": {
    "id": "m03",
@@ -152,7 +184,7 @@ window.OMM.index = {
     }
    ],
    "minutes": 54,
-   "words": 2721,
+   "words": 2722,
    "quiz": 32,
    "cards": 28,
    "cases": [
@@ -579,7 +611,7 @@ window.OMM.index = {
     }
    ],
    "minutes": 53,
-   "words": 3153,
+   "words": 3113,
    "quiz": 32,
    "cards": 32,
    "cases": [
@@ -1014,7 +1046,23 @@ window.OMM.index = {
    "words": 2522,
    "quiz": 34,
    "cards": 30,
-   "cases": []
+   "cases": [
+    {
+     "id": "m17-d1",
+     "title": "Customer disputes the invoice total",
+     "level": 1
+    },
+    {
+     "id": "m17-d2",
+     "title": "The same part keeps running out of stock",
+     "level": 2
+    },
+    {
+     "id": "m17-d3",
+     "title": "Repeat visit because the report was too thin",
+     "level": 3
+    }
+   ]
   },
   "m18": {
    "id": "m18",
@@ -1083,8 +1131,8 @@ window.OMM.index = {
   "minutes": 992,
   "quiz": 647,
   "cards": 538,
-  "words": 50321,
-  "cases": 45
+  "words": 50256,
+  "cases": 54
  },
  "examPool": 647
 };

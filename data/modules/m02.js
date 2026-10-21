@@ -205,16 +205,16 @@ OMM.registerModule({
         },
         {
           "t": "p",
-          "text": "The **measurement category** (CAT) tells you where in an electrical installation the meter may be used. CAT II is for equipment that plugs into a socket. CAT III is for fixed installations such as distribution boards. CAT IV is for the point where the supply enters a building. A higher number means more protection against short voltage surges. The voltage rating is a separate figure. Both must suit the job."
+          "text": "The **measurement category** (CAT) shows where in an installation the meter may be used. CAT II is for equipment that plugs into a socket. CAT III is for fixed installations such as distribution boards. CAT IV is where the supply enters a building. A higher number means more protection against surges. The voltage rating is a separate figure, and both must suit the job."
         },
         {
           "t": "p",
-          "text": "The current inputs have **fuses** inside the meter. If a fuse blows, replace it only with the same rating and type that the maker specifies. A wrong fuse can let a fault turn the meter into a hazard."
+          "text": "The current inputs have **fuses** inside the meter. If one blows, replace it only with the same rating and type. A wrong fuse can turn a fault into a hazard."
         },
         {
           "t": "note",
           "kind": "safety",
-          "text": "Use only a meter with a suitable CAT rating, undamaged leads and shrouded probe tips. Never measure mains current by putting the meter in series. Use a clamp meter instead, as the next lesson shows."
+          "text": "Use only a meter with a suitable CAT rating, undamaged leads and shrouded probe tips. Never measure mains current by putting the meter in series. Use a clamp meter instead."
         },
         {
           "t": "h",
@@ -225,10 +225,10 @@ OMM.registerModule({
           "items": [
             "**Resistance on a live circuit.** The meter sends its own small test current. Outside voltage gives false readings and can damage the meter.",
             "**Wrong range.** On a manual-range meter a value above the range shows OL. Start at the highest range and work down.",
-            "**Current range left selected.** The meter has almost no resistance on its current range. Connecting it across a voltage source makes a short circuit that blows a fuse or worse.",
+            "**Current range left selected.** The meter has almost no resistance on its current range. Across a voltage source it makes a short circuit that blows a fuse or worse.",
             "**Leads in the wrong sockets.** Check the red lead position every time you change function.",
-            "**Reading in the circuit.** Other parts in parallel make a resistor read lower than its true value. Remove at least one end of the part.",
-            "**Touching both probes with your fingers** while measuring resistance. Your body adds its own resistance in parallel."
+            "**Reading in the circuit.** Parallel parts make a resistor read lower than its true value. Remove one end of the part.",
+            "**Touching both probes** with your fingers while measuring resistance adds your body in parallel."
           ]
         },
         {
@@ -287,7 +287,7 @@ OMM.registerModule({
         },
         {
           "t": "formula",
-          "text": "f = 1 ÷ T      T = 1 ÷ f",
+          "text": "f = 1 ÷ T, or T = 1 ÷ f",
           "caption": "Frequency and period"
         },
         {
