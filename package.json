@@ -1,0 +1,12 @@
+{
+  "name": "office-machine-mechanic",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Offline study app for the Office Machine Mechanic programme of study",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "validate": "node tests/validate.js",
+    "test": "node tests/validate.js && node --test tests/engine.test.js",
+    "serve": "node scripts/serve.js"
+  }
+}
