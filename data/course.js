@@ -190,6 +190,25 @@
       }
     ],
 
+    /* Devices for the fault library. Each has a file data/devices/<id>.js with its groups and faults. */
+    devices: [
+      { id: 'laser', title: 'Laser printers', blurb: 'Mono and colour laser and LED printers.', modules: ['m12', 'm07', 'm04'] },
+      { id: 'inkjet', title: 'Inkjet printers', blurb: 'Printers that fire ink from a print head.', modules: ['m12'] },
+      { id: 'dotmatrix', title: 'Dot-matrix printers', blurb: 'Impact printers for multipart forms and continuous paper.', modules: ['m12'] },
+      { id: 'receipt', title: 'Thermal receipt printers', blurb: 'Receipt and label printers used with tills.', modules: ['m15'] },
+      { id: 'copier', title: 'Photocopiers', blurb: 'Analogue and digital copiers, mono and colour.', modules: ['m13', 'm07', 'm04'] },
+      { id: 'mfp', title: 'Multifunction products', blurb: 'Print, copy, scan and fax in one machine.', modules: ['m14', 'm10'] },
+      { id: 'fax', title: 'Fax machines', blurb: 'Stand-alone and built-in fax.', modules: ['m14', 'm10'] },
+      { id: 'scanner', title: 'Scanners', blurb: 'Flatbed scanners and document feeders.', modules: ['m12', 'm13'] },
+      { id: 'finisher', title: 'Finishers and staplers', blurb: 'Sorters, staplers, punches and booklet makers.', modules: ['m14'] },
+      { id: 'monitor', title: 'Monitors and displays', blurb: 'LCD and LED-backlit monitors.', modules: ['m12'] },
+      { id: 'pc', title: 'Desktop computers', blurb: 'Office PCs: hardware, operating system and drivers.', modules: ['m11', 'm09'] },
+      { id: 'network', title: 'Network links', blurb: 'Cables, switches, addresses and connections.', modules: ['m10'] },
+      { id: 'pos', title: 'Cash registers and POS terminals', blurb: 'Tills, drawers, displays and payment devices.', modules: ['m15'] },
+      { id: 'barcode', title: 'Barcode scanners and scales', blurb: 'Retail scanners and weighing scales.', modules: ['m15'] },
+      { id: 'atm', title: 'ATMs', blurb: 'Cash dispensers and recyclers.', modules: ['m18'] }
+    ],
+
     /* Diagram names that lesson blocks may reference: { t: 'diagram', name: '...' }.
        The drawings themselves are in js/diagrams.js. */
     diagrams: [
@@ -270,6 +289,16 @@
   root.OMM.cases = root.OMM.cases || {};
   root.OMM.registerCases = function (moduleId, list) {
     root.OMM.cases[moduleId] = list;
+  };
+  /* Fault library entries live in data/devices/<id>.js. */
+  root.OMM.devices = root.OMM.devices || {};
+  root.OMM.registerDevice = function (d) {
+    root.OMM.devices[d.id] = d;
+  };
+  /* Installation guides live in data/install/<id>.js. */
+  root.OMM.installs = root.OMM.installs || {};
+  root.OMM.registerInstall = function (d) {
+    root.OMM.installs[d.id] = d;
   };
 
   if (typeof module !== 'undefined' && module.exports) {

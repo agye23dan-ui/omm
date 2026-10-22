@@ -109,7 +109,28 @@ function load(ids) {
   // Copy out as plain JSON so later checks see ordinary objects.
   var modules = JSON.parse(vm.runInContext('JSON.stringify(OMM.modules)', ctx));
   var cases = JSON.parse(vm.runInContext('JSON.stringify(OMM.cases)', ctx));
-  return { course: course, modules: modules, cases: cases, ids: ids, loadErrors: loadErrors };
+  var devices = {};
+  (course.devices || []).forEach(function (d) {
+    var dfile = path.join(ROOT, 'data/devices', d.id + '.js');
+    if (!fs.existsSync(dfile)) { loadErrors.push('device ' + d.id + ': file data/devices/' + d.id + '.js is missing'); return; }
+    try {
+      vm.runInContext(fs.readFileSync(dfile, 'utf8'), ctx, { filename: 'data/devices/' + d.id + '.js' });
+    } catch (e) {
+      loadErrors.push('device ' + d.id + ': could not run data/devices/' + d.id + '.js: ' + e.message);
+    }
+  });
+  (course.devices || []).forEach(function (d) {
+    var ifile = path.join(ROOT, 'data/install', d.id + '.js');
+    if (!fs.existsSync(ifile)) { loadErrors.push('install ' + d.id + ': file data/install/' + d.id + '.js is missing'); return; }
+    try {
+      vm.runInContext(fs.readFileSync(ifile, 'utf8'), ctx, { filename: 'data/install/' + d.id + '.js' });
+    } catch (e) {
+      loadErrors.push('install ' + d.id + ': could not run data/install/' + d.id + '.js: ' + e.message);
+    }
+  });
+  devices = JSON.parse(vm.runInContext('JSON.stringify(OMM.devices)', ctx));
+  var installs = JSON.parse(vm.runInContext('JSON.stringify(OMM.installs)', ctx));
+  return { course: course, modules: modules, cases: cases, devices: devices, installs: installs, ids: ids, loadErrors: loadErrors };
 }
 
 function words(s) {
@@ -463,6 +484,69 @@ function validateCases(list, id, lessonIds) {
   return { errors: errors, warnings: warnings, n: list.length };
 }
 
+/* Fault library: data/devices/<id>.js. Each fault is [group, symptom, cause, check, remedy, lesson, safety?]. */
+function validateDevice(d, id, lessonSet) {
+  var errors = [];
+  var warnings = [];
+  function err(msg) { errors.push('device ' + id + ': ' + msg); }
+  function warn(msg) { warnings.push('device ' + id + ': ' + msg); }
+  if (!d) { err('did not register (call OMM.registerDevice with id "' + id + '")'); return { errors: errors, warnings: warnings, n: 0 }; }
+  Object.keys(d).forEach(function (k) { if (['id', 'groups', 'faults'].indexOf(k) === -1) err('unexpected key "' + k + '" (title and blurb come from data/course.js)'); });
+  if (d.id !== id) err('id is "' + d.id + '", expected "' + id + '"');
+  if (!Array.isArray(d.groups) || d.groups.length < 2 || d.groups.length > 9) { err('groups needs 2 to 9 names'); return { errors: errors, warnings: warnings, n: 0 }; }
+  d.groups.forEach(function (g, i) { if (!isStr(g) || g.length > 30) err('group ' + (i + 1) + ' missing or over 30 characters'); else textProblems(g, 'group ' + (i + 1), err, warn); });
+  if (!Array.isArray(d.faults) || d.faults.length < 8) { err('needs at least 8 faults'); return { errors: errors, warnings: warnings, n: 0 }; }
+  var seen = {};
+  var perGroup = {};
+  d.faults.forEach(function (f, i) {
+    var w = 'fault ' + (i + 1);
+    if (!Array.isArray(f) || (f.length !== 6 && f.length !== 7)) { err(w + ': needs [group, symptom, cause, check, remedy, lesson] and an optional safety note'); return; }
+    if (d.groups.indexOf(f[0]) === -1) err(w + ': group "' + f[0] + '" is not in groups');
+    perGroup[f[0]] = (perGroup[f[0]] || 0) + 1;
+    var spec = [['symptom', 1, 90, 12], ['cause', 2, 280, 25], ['check', 3, 260, 20], ['remedy', 4, 380, 30]];
+    spec.forEach(function (s) {
+      var val = f[s[1]];
+      if (!isStr(val) || val.length > s[2] || val.length < s[3]) err(w + ': ' + s[0] + ' missing or not ' + s[3] + ' to ' + s[2] + ' characters');
+      else textProblems(val, w + ' ' + s[0], err, warn);
+    });
+    if (f[1] && seen[String(f[1]).toLowerCase()]) err(w + ': same symptom as fault ' + seen[String(f[1]).toLowerCase()]);
+    else if (f[1]) seen[String(f[1]).toLowerCase()] = i + 1;
+    if (!isStr(f[5]) || !lessonSet[f[5]]) err(w + ': lesson "' + f[5] + '" does not exist');
+    if (f.length === 7) {
+      if (!isStr(f[6]) || f[6].length > 260 || f[6].length < 20) err(w + ': safety note missing or not 20 to 260 characters');
+      else textProblems(f[6], w + ' safety', err, warn);
+    }
+  });
+  d.groups.forEach(function (g) { if (!perGroup[g]) err('group "' + g + '" has no faults'); });
+  return { errors: errors, warnings: warnings, n: d.faults.length };
+}
+
+/* Installation guide: data/install/<id>.js. Six phases of checklist items, plus tools and safety. */
+var INSTALL_PHASES = ['before', 'site', 'unpack', 'setup', 'test', 'handover'];
+function validateInstall(d, id, lessonSet) {
+  var errors = [];
+  var warnings = [];
+  function err(msg) { errors.push('install ' + id + ': ' + msg); }
+  function warn(msg) { warnings.push('install ' + id + ': ' + msg); }
+  if (!d) { err('did not register (call OMM.registerInstall with id "' + id + '")'); return { errors: errors, warnings: warnings, n: 0 }; }
+  Object.keys(d).forEach(function (k) { if (['id', 'intro', 'tools', 'safety', 'lesson'].concat(INSTALL_PHASES).indexOf(k) === -1) err('unexpected key "' + k + '"'); });
+  if (d.id !== id) err('id is "' + d.id + '", expected "' + id + '"');
+  if (!isStr(d.intro) || d.intro.length < 30 || d.intro.length > 260) err('intro missing or not 30 to 260 characters'); else textProblems(d.intro, 'intro', err, warn);
+  if (!isStr(d.lesson) || !lessonSet[d.lesson]) err('lesson "' + d.lesson + '" does not exist');
+  var n = 0;
+  [['tools', 3, 10, 90], ['safety', 3, 8, 220]].concat(INSTALL_PHASES.map(function (p) { return [p, 3, 10, 230]; })).forEach(function (spec) {
+    var list = d[spec[0]];
+    if (!Array.isArray(list) || list.length < spec[1] || list.length > spec[2]) { err(spec[0] + ' needs ' + spec[1] + ' to ' + spec[2] + ' items'); return; }
+    list.forEach(function (it, i) {
+      if (!isStr(it) || it.length > spec[3] || it.length < 8) err(spec[0] + ' item ' + (i + 1) + ': missing or not 8 to ' + spec[3] + ' characters');
+      else textProblems(it, spec[0] + ' item ' + (i + 1), err, warn);
+      n++;
+    });
+  });
+  if (n && d.setup && d.setup.length < 5) warn('setup has fewer than 5 steps');
+  return { errors: errors, warnings: warnings, n: n };
+}
+
 function run(ids) {
   var loaded = load(ids);
   var errors = loaded.loadErrors.slice();
@@ -483,14 +567,31 @@ function run(ids) {
       if (r.stats) r.stats.cases = cr.n;
     }
   });
-  return { errors: errors, warnings: warnings, summary: summary, course: loaded.course, modules: loaded.modules, cases: loaded.cases };
+  var deviceCounts = {};
+  if (!ids || !ids.length) {
+    var lessonSet = {};
+    Object.keys(loaded.modules).forEach(function (mid) { (loaded.modules[mid].lessons || []).forEach(function (l) { lessonSet[l.id] = true; }); });
+    (loaded.course.devices || []).forEach(function (d) {
+      if (loaded.loadErrors.some(function (e) { return e.indexOf('device ' + d.id + ':') === 0; })) return;
+      var dr = validateDevice(loaded.devices[d.id], d.id, lessonSet);
+      errors = errors.concat(dr.errors);
+      warnings = warnings.concat(dr.warnings);
+      deviceCounts[d.id] = dr.n;
+      if (loaded.loadErrors.some(function (e) { return e.indexOf('install ' + d.id + ':') === 0; })) return;
+      var ir = validateInstall(loaded.installs[d.id], d.id, lessonSet);
+      errors = errors.concat(ir.errors);
+      warnings = warnings.concat(ir.warnings);
+    });
+  }
+  return { errors: errors, warnings: warnings, summary: summary, course: loaded.course, modules: loaded.modules, cases: loaded.cases, devices: loaded.devices, installs: loaded.installs, deviceCounts: deviceCounts };
 }
 
-module.exports = { run: run, validateModule: validateModule, validateCases: validateCases, load: load };
+module.exports = { run: run, validateModule: validateModule, validateCases: validateCases, validateDevice: validateDevice, validateInstall: validateInstall, load: load };
 
 if (require.main === module) {
   var ids = process.argv.slice(2);
   var res = run(ids);
+  Object.keys(res.deviceCounts || {}).forEach(function (k) { console.log('device ' + k + '  faults ' + res.deviceCounts[k]); });
   res.summary.forEach(function (s) {
     var st = s.stats;
     console.log(s.id + '  lessons ' + st.lessons + '  words ' + st.words + '  quiz ' + st.quiz + '  cards ' + st.cards + (st.cases ? '  cases ' + st.cases : ''));

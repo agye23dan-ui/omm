@@ -7,6 +7,7 @@ import { cell, areaColor } from '../halftone.js';
 import { fmtMinutes } from '../lib.js';
 import { setTitle } from '../ui.js';
 import * as modnav from './modnav.js';
+import * as devices from './devices.js';
 
 /* The lesson to offer next: the one after the last opened, else the first not done. */
 export function nextLesson() {
@@ -50,6 +51,9 @@ export function render() {
   }
 
   root.appendChild(modnav.grid());
+  root.appendChild(h('section', { class: 'modnav' }, h('h2', null, 'Learn by device'),
+    h('p', { class: 'muted small' }, 'Every common fault for each machine, with its cause, first check and remedy.'), devices.tiles(true),
+    h('div', { class: 'btn-row' }, h('a', { class: 'btn small', href: '#/devices' }, 'All devices'))));
 
   var chart = h('div', { class: 'chart-wrap' },
     h('div', { class: 'chart-head' }, h('h2', null, 'Your test chart'), h('span', { class: 'big' }, Math.round(overall * 100) + '%')),

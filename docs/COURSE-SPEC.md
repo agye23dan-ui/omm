@@ -392,6 +392,55 @@ Rules for good cases:
 - The right repair fixes the cause. Verification must prove the thing that failed, not just that the machine switches on.
 - Results, options and explanations follow the same voice and safety rules as lessons. Do not refer to options by letter or number, because the app shuffles them.
 
+## Fault library by device
+
+`data/devices/<id>.js` lists the common faults of one machine, with the remedy for each. The device list, titles and blurbs are in `devices` in `data/course.js`. Each file has this shape:
+
+```js
+OMM.registerDevice({
+  id: 'laser',
+  groups: ['Paper feed', 'Print quality', ...],      // 2 to 9 areas, each under 30 characters
+  faults: [
+    // [group, symptom, cause, check, remedy, lesson, safety (optional)]
+    ['Paper feed', 'Paper jams at the pick-up from the tray',
+      'A worn or glazed pick-up roller...',            // likely cause, 25 to 280 characters
+      'Look at the roller surface...',                  // first check, 20 to 260
+      'Clean the roller... replace...',                 // remedy, 30 to 380
+      'm04-l3',                                         // the lesson that teaches it
+      'Unplug the machine first.']                      // optional safety note, 20 to 260
+  ]
+});
+```
+
+Rules:
+
+- At least 8 faults per device, and every group needs at least one. The symptom is what the customer or technician sees, under 90 characters, and it must be different from every other symptom on that device.
+- Give the cause, then the first check that tells the causes apart, then the remedy that fixes the cause, not only the symptom. Say what to replace, with the same type and rating where it matters.
+- Add a safety note whenever the fault involves mains, a hot fuser, high voltage, a laser, moving parts, cash or customer data. Never suggest bypassing an interlock or fitting a larger fuse.
+- Use plain English, no brand names and no invented figures. The lesson id must exist.
+
+## Installation guides by device
+
+`data/install/<id>.js` is the installation checklist for one device, using the same device ids as the fault library:
+
+```js
+OMM.registerInstall({
+  id: 'laser',
+  intro: 'One or two sentences on what a good installation achieves.',   // 30 to 260 characters
+  lesson: 'm13-l7',
+  tools: [ ... ],       // 3 to 10 items, each under 90 characters
+  safety: [ ... ],      // 3 to 8 items, each under 220 characters
+  before: [ ... ], site: [ ... ], unpack: [ ... ],   // 3 to 10 steps each, under 230 characters
+  setup: [ ... ], test: [ ... ], handover: [ ... ]
+});
+```
+
+- Write each step as one action the technician can tick off. Use "Check", "Fit", "Connect", "Set", "Show" and "Record" at the start where it helps.
+- Safety comes first and must be specific to the device: lifting, mains and earth, hot fuser, laser, high voltage, moving parts, cash and customer data.
+- Always tell the learner to follow the manufacturer's installation procedure for the model. Do not invent figures, clearances or settings.
+- Every guide should include a test that proves the main function works, and a handover step that shows the customer how to use it and records the serial number and settings.
+- For an ATM, cash and safe handling stay with the bank's authorised custodians.
+
 ## Checking your work
 
 ```

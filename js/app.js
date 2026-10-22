@@ -11,6 +11,7 @@ import * as quiz from './views/quiz.js';
 import * as exam from './views/exam.js';
 import * as cards from './views/cards.js';
 import * as diagnose from './views/diagnose.js';
+import * as devices from './views/devices.js';
 import * as progress from './views/progress.js';
 import * as settings from './views/settings.js';
 
@@ -33,6 +34,10 @@ var ROUTES = [
   [/^cards$/, 'cards', function () { return cards.hub(); }],
   [/^cards\/run\/(due|m\d+)$/, 'cards', function (p) { return cards.run(p); }],
   [/^cards\/browse$/, 'cards', function () { return cards.browse(); }],
+  [/^devices$/, 'learn', function () { return devices.hub(); }],
+  [/^devices\/([a-z]+)$/, 'learn', function (p) { return devices.page(p); }],
+  [/^devices\/([a-z]+)\/drill$/, 'learn', function (p) { return devices.drill(p); }],
+  [/^devices\/([a-z]+)\/install$/, 'learn', function (p) { return devices.install(p); }],
   [/^diagnose$/, 'diagnose', function () { return diagnose.hub(); }],
   [/^diagnose\/case\/(m\d+-d\d+)$/, 'diagnose', function (p) { return diagnose.run(p); }],
   [/^progress$/, 'progress', function () { return progress.render(); }],

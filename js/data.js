@@ -47,6 +47,74 @@ export function loadModule(id) {
   return pending[id];
 }
 
+var pendingDevices = {};
+
+export function devices() { return window.OMM.index.devices || []; }
+
+export function deviceInfo(id) {
+  var list = devices();
+  for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i];
+  return null;
+}
+
+/* The faults of one device, as objects with an id such as laser-f01. */
+export function loadDevice(id) {
+  var info = deviceInfo(id);
+  if (!info) return Promise.reject(new Error('Unknown device ' + id));
+  if (window.OMM.devices && window.OMM.devices[id]) return Promise.resolve(expand(id));
+  if (pendingDevices[id]) return pendingDevices[id];
+  pendingDevices[id] = new Promise(function (resolve, reject) {
+    var s = document.createElement('script');
+    s.src = 'data/devices/' + id + '.js';
+    s.async = true;
+    s.onload = function () {
+      if (window.OMM.devices && window.OMM.devices[id]) resolve(expand(id));
+      else { delete pendingDevices[id]; reject(new Error('Device ' + id + ' did not register')); }
+    };
+    s.onerror = function () {
+      delete pendingDevices[id];
+      reject(new Error('Could not load this device. Check your connection, or open the app once while online so it can save it for offline use.'));
+    };
+    document.head.appendChild(s);
+  });
+  return pendingDevices[id];
+}
+
+var pendingInstalls = {};
+
+/* The installation guide of one device, from data/install/<id>.js. */
+export function loadInstall(id) {
+  var info = deviceInfo(id);
+  if (!info) return Promise.reject(new Error('Unknown device ' + id));
+  if (window.OMM.installs && window.OMM.installs[id]) return Promise.resolve(window.OMM.installs[id]);
+  if (pendingInstalls[id]) return pendingInstalls[id];
+  pendingInstalls[id] = new Promise(function (resolve, reject) {
+    var s = document.createElement('script');
+    s.src = 'data/install/' + id + '.js';
+    s.async = true;
+    s.onload = function () {
+      if (window.OMM.installs && window.OMM.installs[id]) resolve(window.OMM.installs[id]);
+      else { delete pendingInstalls[id]; reject(new Error('Installation guide ' + id + ' did not register')); }
+    };
+    s.onerror = function () {
+      delete pendingInstalls[id];
+      reject(new Error('Could not load this guide. Check your connection, or open the app once while online so it can save it for offline use.'));
+    };
+    document.head.appendChild(s);
+  });
+  return pendingInstalls[id];
+}
+
+function expand(id) {
+  var d = window.OMM.devices[id];
+  if (!d.expanded) {
+    d.expanded = d.faults.map(function (f, i) {
+      return { id: id + '-f' + (i + 1 < 10 ? '0' : '') + (i + 1), group: f[0], symptom: f[1], cause: f[2], check: f[3], remedy: f[4], lesson: f[5], safety: f[6] || null };
+    });
+  }
+  return { info: deviceInfo(id), groups: d.groups, faults: d.expanded };
+}
+
 var pendingCases = {};
 
 /* Diagnosis cases for one module (data/cases/mNN.js). Resolves to an empty list if the module has none. */

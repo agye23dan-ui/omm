@@ -7,6 +7,7 @@ import { cell, strip, areaColor } from '../halftone.js';
 import { dayKey, addDays, streak, longestStreak, plural } from '../lib.js';
 import { pageHead, setTitle, loading } from '../ui.js';
 import { historyList } from './exam.js';
+import { totalLearned } from './devices.js';
 import { lessonLink } from './quiz.js';
 
 function kpi(v, k, ic) {
@@ -29,7 +30,7 @@ export function render() {
   root.appendChild(h('div', { class: 'kpis' },
     kpi(overall + '%', 'Overall mastery'), kpi(cur, cur === 1 ? 'Day streak' : 'Days in a row', 'flame'),
     kpi(lessonsDone + '/' + idx.totals.lessons, 'Lessons done'), kpi(answered + '/' + idx.totals.quiz, 'Questions seen'),
-    kpi(casesDone + '/' + idx.totals.cases, 'Cases solved')));
+    kpi(casesDone + '/' + idx.totals.cases, 'Cases solved'), kpi(totalLearned() + '/' + idx.totals.faults, 'Faults learned')));
 
   var dots = h('div', { class: 'dots14', role: 'img', 'aria-label': 'Study activity over the last 14 days' });
   for (var i = 13; i >= 0; i--) {

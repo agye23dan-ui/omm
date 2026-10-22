@@ -32,6 +32,12 @@ function lessonWords(l) {
   return n;
 }
 
+function INSTALL_COUNT(g) {
+  var n = 0;
+  ['before', 'site', 'unpack', 'setup', 'test', 'handover'].forEach(function (p) { n += (g[p] || []).length; });
+  return n;
+}
+
 function buildIndex() {
   var res = validate.run();
   if (res.errors.length) {
@@ -42,7 +48,7 @@ function buildIndex() {
   var course = res.course;
   var modules = {};
   var order = [];
-  var totals = { lessons: 0, minutes: 0, quiz: 0, cards: 0, words: 0, cases: 0 };
+  var totals = { lessons: 0, minutes: 0, quiz: 0, cards: 0, words: 0, cases: 0, faults: 0 };
   course.modules.forEach(function (cm) {
     var m = res.modules[cm.id];
     var minutes = 0, w = 0;
@@ -73,9 +79,15 @@ function buildIndex() {
     totals.cards += m.cards.length;
     totals.words += w;
   });
+  var devices = (course.devices || []).map(function (d) {
+    var f = res.devices[d.id];
+    totals.faults += f.faults.length;
+    return { id: d.id, title: d.title, blurb: d.blurb, modules: d.modules, groups: f.groups, count: f.faults.length, steps: INSTALL_COUNT(res.installs[d.id]) };
+  });
   var out = {
     order: order,
     modules: modules,
+    devices: devices,
     totals: totals,
     examPool: totals.quiz
   };
@@ -83,7 +95,7 @@ function buildIndex() {
     'window.OMM = window.OMM || {};\n' +
     'window.OMM.index = ' + JSON.stringify(out, null, 1) + ';\n';
   fs.writeFileSync(path.join(ROOT, 'data/index.js'), src);
-  console.log('data/index.js  ' + order.length + ' modules, ' + totals.quiz + ' questions, ' + totals.cards + ' cards, ' + totals.cases + ' diagnosis cases, ' + totals.minutes + ' min of lessons');
+  console.log('data/index.js  ' + order.length + ' modules, ' + totals.quiz + ' questions, ' + totals.cards + ' cards, ' + totals.cases + ' diagnosis cases, ' + totals.faults + ' device faults, ' + totals.minutes + ' min of lessons');
   return out;
 }
 

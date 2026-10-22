@@ -1126,13 +1126,279 @@ window.OMM.index = {
    ]
   }
  },
+ "devices": [
+  {
+   "id": "laser",
+   "title": "Laser printers",
+   "blurb": "Mono and colour laser and LED printers.",
+   "modules": [
+    "m12",
+    "m07",
+    "m04"
+   ],
+   "groups": [
+    "Paper feed",
+    "Print quality",
+    "Fuser and heat",
+    "Power and electrical",
+    "Mechanical and noise",
+    "Messages and sensors",
+    "Network and driver",
+    "Consumables"
+   ],
+   "count": 24,
+   "steps": 31
+  },
+  {
+   "id": "inkjet",
+   "title": "Inkjet printers",
+   "blurb": "Printers that fire ink from a print head.",
+   "modules": [
+    "m12"
+   ],
+   "groups": [
+    "Print quality",
+    "Ink and head",
+    "Paper feed",
+    "Mechanical",
+    "Messages",
+    "Connection"
+   ],
+   "count": 16,
+   "steps": 29
+  },
+  {
+   "id": "dotmatrix",
+   "title": "Dot-matrix printers",
+   "blurb": "Impact printers for multipart forms and continuous paper.",
+   "modules": [
+    "m12"
+   ],
+   "groups": [
+    "Print quality",
+    "Head and ribbon",
+    "Paper handling",
+    "Electrical and mechanical"
+   ],
+   "count": 12,
+   "steps": 25
+  },
+  {
+   "id": "receipt",
+   "title": "Thermal receipt printers",
+   "blurb": "Receipt and label printers used with tills.",
+   "modules": [
+    "m15"
+   ],
+   "groups": [
+    "Print quality",
+    "Paper and cutter",
+    "Drawer and connection",
+    "Power and mechanical"
+   ],
+   "count": 12,
+   "steps": 25
+  },
+  {
+   "id": "copier",
+   "title": "Photocopiers",
+   "blurb": "Analogue and digital copiers, mono and colour.",
+   "modules": [
+    "m13",
+    "m07",
+    "m04"
+   ],
+   "groups": [
+    "Paper feed and jams",
+    "Copy quality",
+    "Scanning and optics",
+    "Fuser and heat",
+    "Developer and drum",
+    "Power and electrical",
+    "Mechanical",
+    "Codes and maintenance"
+   ],
+   "count": 26,
+   "steps": 36
+  },
+  {
+   "id": "mfp",
+   "title": "Multifunction products",
+   "blurb": "Print, copy, scan and fax in one machine.",
+   "modules": [
+    "m14",
+    "m10"
+   ],
+   "groups": [
+    "Network and printing",
+    "Scanning",
+    "Fax",
+    "Controller and settings",
+    "Panel and security"
+   ],
+   "count": 16,
+   "steps": 34
+  },
+  {
+   "id": "fax",
+   "title": "Fax machines",
+   "blurb": "Stand-alone and built-in fax.",
+   "modules": [
+    "m14",
+    "m10"
+   ],
+   "groups": [
+    "Line and connection",
+    "Sending",
+    "Receiving",
+    "Print and scan"
+   ],
+   "count": 12,
+   "steps": 28
+  },
+  {
+   "id": "scanner",
+   "title": "Scanners",
+   "blurb": "Flatbed scanners and document feeders.",
+   "modules": [
+    "m12",
+    "m13"
+   ],
+   "groups": [
+    "Image quality",
+    "Operation",
+    "Feeder",
+    "Connection and software"
+   ],
+   "count": 12,
+   "steps": 25
+  },
+  {
+   "id": "finisher",
+   "title": "Finishers and staplers",
+   "blurb": "Sorters, staplers, punches and booklet makers.",
+   "modules": [
+    "m14"
+   ],
+   "groups": [
+    "Stapling",
+    "Stacking and alignment",
+    "Jams and sensors",
+    "Punch and booklet"
+   ],
+   "count": 13,
+   "steps": 25
+  },
+  {
+   "id": "monitor",
+   "title": "Monitors and displays",
+   "blurb": "LCD and LED-backlit monitors.",
+   "modules": [
+    "m12"
+   ],
+   "groups": [
+    "Picture",
+    "Power and backlight",
+    "Connection"
+   ],
+   "count": 10,
+   "steps": 22
+  },
+  {
+   "id": "pc",
+   "title": "Desktop computers",
+   "blurb": "Office PCs: hardware, operating system and drivers.",
+   "modules": [
+    "m11",
+    "m09"
+   ],
+   "groups": [
+    "Start-up",
+    "Heat and power",
+    "Storage",
+    "Memory",
+    "Operating system and software",
+    "Drivers and peripherals"
+   ],
+   "count": 17,
+   "steps": 31
+  },
+  {
+   "id": "network",
+   "title": "Network links",
+   "blurb": "Cables, switches, addresses and connections.",
+   "modules": [
+    "m10"
+   ],
+   "groups": [
+    "Cable and link",
+    "Addressing",
+    "Services and ports",
+    "Wireless",
+    "Telephone and fax links"
+   ],
+   "count": 14,
+   "steps": 27
+  },
+  {
+   "id": "pos",
+   "title": "Cash registers and POS terminals",
+   "blurb": "Tills, drawers, displays and payment devices.",
+   "modules": [
+    "m15"
+   ],
+   "groups": [
+    "Printing and drawer",
+    "Display and keyboard",
+    "Totals and settings",
+    "Power and memory",
+    "Payment and security",
+    "Network"
+   ],
+   "count": 17,
+   "steps": 29
+  },
+  {
+   "id": "barcode",
+   "title": "Barcode scanners and scales",
+   "blurb": "Retail scanners and weighing scales.",
+   "modules": [
+    "m15"
+   ],
+   "groups": [
+    "Reading",
+    "Connection",
+    "Scales"
+   ],
+   "count": 12,
+   "steps": 26
+  },
+  {
+   "id": "atm",
+   "title": "ATMs",
+   "blurb": "Cash dispensers and recyclers.",
+   "modules": [
+    "m18"
+   ],
+   "groups": [
+    "Card reader and PIN pad",
+    "Cash dispenser",
+    "Printer and screen",
+    "Host link and software",
+    "Security and handling"
+   ],
+   "count": 15,
+   "steps": 30
+  }
+ ],
  "totals": {
   "lessons": 109,
   "minutes": 992,
   "quiz": 647,
   "cards": 538,
   "words": 50256,
-  "cases": 54
+  "cases": 54,
+  "faults": 228
  },
  "examPool": 647
 };
