@@ -9,6 +9,8 @@ import { renderBlocks } from '../render.js';
 import { crumb, setTitle, loading, failure } from '../ui.js';
 import { lessonHref } from './learn.js';
 import * as modnav from './modnav.js';
+import { lessonPanel } from './devices.js';
+import { panel as errorPanel } from './errorcodes.js';
 
 function toolLink(href, ic, title, sub) {
   return h('a', { class: 'tool-link', href: href }, icon(ic, 22), h('div', null, h('div', { class: 't' }, title), h('div', { class: 's' }, sub)), icon('chevron', 18));
@@ -86,7 +88,7 @@ export function lesson(params) {
     var out = h('article', { class: 'reader' }, crumb('#/module/' + id, 'Module ' + info.number + ': ' + info.short), modnav.strip(id),
       h('h1', null, l.title),
       h('div', { class: 'byline' }, h('span', null, 'Lesson ' + n + ' of ' + info.lessons.length), h('span', null, l.minutes + ' min read')),
-      bar, renderBlocks(l.body),
+      bar, renderBlocks(l.body), lessonPanel(lid), errorPanel(lid),
       h('div', { class: 'reader-nav' },
         n > 1 ? h('a', { class: 'btn', href: lessonHref(lessonId(id, n - 1)) }, icon('back', 18), 'Previous') : null,
         doneBtn,

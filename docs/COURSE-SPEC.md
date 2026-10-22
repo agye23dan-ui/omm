@@ -394,7 +394,7 @@ Rules for good cases:
 
 ## Fault library by device
 
-`data/devices/<id>.js` lists the common faults of one machine, with the remedy for each. The device list, titles and blurbs are in `devices` in `data/course.js`. Each file has this shape:
+`data/devices/<id>.js` lists the common faults of one machine, with the remedy for each. The app shows each fault at the end of the lesson named in its `lesson` field, so choose the lesson that teaches the fault. The device list, titles and blurbs are in `devices` in `data/course.js`. Each file has this shape:
 
 ```js
 OMM.registerDevice({
@@ -421,7 +421,7 @@ Rules:
 
 ## Installation guides by device
 
-`data/install/<id>.js` is the installation checklist for one device, using the same device ids as the fault library:
+`data/install/<id>.js` is the installation checklist for one device, using the same device ids as the fault library. It appears at the end of the lesson named in its `lesson` field:
 
 ```js
 OMM.registerInstall({
@@ -440,6 +440,27 @@ OMM.registerInstall({
 - Always tell the learner to follow the manufacturer's installation procedure for the model. Do not invent figures, clearances or settings.
 - Every guide should include a test that proves the main function works, and a handover step that shows the customer how to use it and records the serial number and settings.
 - For an ATM, cash and safe handling stay with the bank's authorised custodians.
+
+## Manufacturer error codes
+
+`data/errorcodes.js` is the one place where brand names and model families are allowed, because a code only means something for one maker.
+
+```js
+OMM.registerErrorCodes({
+  lookups: [ [brand, where the codes are published, tip] ],
+  codes: [
+    // [brand, kind, code, appliesTo, meaning, remedy, lesson, source]
+    ['HP', 'Fuser', '50.x', 'LaserJet and LaserJet Pro families', 'A fuser error...', 'Switch off...', 'm13-l5', 'https://support.hp.com/...']
+  ]
+});
+```
+
+Rules:
+
+- Take each row from the maker's own public support page or manual, and give the link. Write the meaning and the remedy in your own words. Do not copy a page, and do not use leaked or pirated service manuals.
+- Say which family or model the page covers in `appliesTo`. The same code can mean different things on different models, so never write a code as if it were universal.
+- Only record what the source says. If a page gives only the subsystem, say so and send the reader to the full article. Do not guess a cause or a fix.
+- The `lesson` field decides which lesson shows the row, so choose the lesson that teaches that area.
 
 ## Checking your work
 

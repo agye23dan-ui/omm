@@ -53,29 +53,32 @@ export function hub() {
 
 /* ---------- One device ---------- */
 
-function faultCard(f, onToggle) {
-  var learned = isLearned(f.id);
-  var det = h('details', { class: 'fault' + (learned ? ' learned' : ''), id: f.id });
-  var tick = h('span', { class: 'tick', 'aria-hidden': 'true' }, learned ? icon('check', 16) : null);
-  det.appendChild(h('summary', null, h('span', { class: 'sym' }, f.symptom), tick, icon('chevron', 16)));
-  var body = h('div', { class: 'faultbody' },
-    h('div', { class: 'blk' }, h('div', { class: 'lbl' }, 'Likely cause'), h('p', null, rich(f.cause))),
-    h('div', { class: 'blk' }, h('div', { class: 'lbl' }, 'First check'), h('p', null, rich(f.check))),
-    h('div', { class: 'blk fix' }, h('div', { class: 'lbl' }, icon('wrench', 16), 'Remedy'), h('p', null, rich(f.remedy))),
-    f.safety ? h('div', { class: 'blk safe' }, h('div', { class: 'lbl' }, icon('warning', 16), 'Safety'), h('p', null, rich(f.safety))) : null);
-  var btn = h('button', { class: 'btn small' + (learned ? '' : ' primary'), type: 'button' }, icon('check', 16), learned ? 'Learned (tap to undo)' : 'Mark as learned');
-  btn.addEventListener('click', function () {
-    var now = !isLearned(f.id);
-    setLearned(f.id, now);
-    det.classList.toggle('learned', now);
-    tick.replaceChildren(now ? icon('check', 16) : '');
-    btn.classList.toggle('primary', !now);
-    btn.lastChild.textContent = now ? 'Learned (tap to undo)' : 'Mark as learned';
-    if (onToggle) onToggle();
+/*
+ * Faults as a table: fault, likely cause, first check, remedy and a learned tick.
+ * On narrow screens the CSS turns each row into a labelled card, so it stays readable on a phone.
+ */
+function faultTable(faults, onToggle) {
+  var rows = [];
+  faults.forEach(function (f) {
+    var learned = isLearned(f.id);
+    var cb = h('input', { type: 'checkbox', checked: learned ? true : null, 'aria-label': 'Learned: ' + f.symptom });
+    var tr = h('tr', { class: 'frow' + (learned ? ' learned' : ''), id: f.id },
+      h('th', { scope: 'row', class: 'sym', dataset: { label: 'Fault' } }, f.symptom),
+      h('td', { dataset: { label: 'Likely cause' } }, rich(f.cause)),
+      h('td', { dataset: { label: 'First check' } }, rich(f.check)),
+      h('td', { class: 'fix', dataset: { label: 'Remedy' } }, rich(f.remedy)),
+      h('td', { class: 'lrn', dataset: { label: 'Learned' } }, cb));
+    cb.addEventListener('change', function () {
+      setLearned(f.id, cb.checked);
+      tr.classList.toggle('learned', cb.checked);
+      if (onToggle) onToggle();
+    });
+    rows.push(tr);
+    if (f.safety) rows.push(h('tr', { class: 'safetyrow' }, h('td', { colspan: '5' }, h('span', { class: 'lbl' }, icon('warning', 16), 'Safety'), rich(f.safety))));
   });
-  body.appendChild(h('div', { class: 'btn-row' }, btn, h('a', { class: 'btn small', href: lessonLink(f.lesson) }, 'Read: ' + data.lessonTitle(f.lesson))));
-  det.appendChild(body);
-  return det;
+  return h('div', { class: 'tablewrap' }, h('table', { class: 'faulttable' },
+    h('thead', null, h('tr', null, ['Fault', 'Likely cause', 'First check', 'Remedy', 'Learned'].map(function (t) { return h('th', { scope: 'col' }, t); }))),
+    h('tbody', null, rows)));
 }
 
 export function page(params) {
@@ -109,7 +112,7 @@ export function page(params) {
         var inGroup = shown.filter(function (f) { return f.group === g; });
         if (!inGroup.length) return;
         nodes.push(h('h2', { class: 'faultgroup' }, g, h('span', { class: 'n' }, String(inGroup.length))));
-        inGroup.forEach(function (f) { nodes.push(faultCard(f, progress)); });
+        nodes.push(faultTable(inGroup, progress));
       });
       if (!nodes.length) nodes.push(h('p', { class: 'empty' }, 'No faults match. Clear the search or choose another area.'));
       listEl.replaceChildren.apply(listEl, nodes);
@@ -219,6 +222,49 @@ var PHASES = [
 
 function instKey(id) { return 'inst:' + id; }
 
+/* The checklist itself: progress, safety, tools, six phases and the buttons. Used on the guide page and inside lessons. */
+function checklistBody(id, g, withButtons) {
+  var saved = store.get('kv', instKey(id)) || {};
+  var total = 0;
+  PHASES.forEach(function (p) { total += g[p[0]].length; });
+  var fill = h('i', null);
+  var txt = h('span', { class: 'muted small' });
+  var boxes = [];
+  function progress() {
+    var n = Object.keys(saved).length;
+    fill.style.width = Math.round(n / total * 100) + '%';
+    txt.textContent = n + ' of ' + total + ' steps ticked';
+  }
+  function persist() { store.set('kv', instKey(id), saved); progress(); }
+  var sections = PHASES.map(function (p, pi) {
+    var rows = g[p[0]].map(function (text, i) {
+      var k = p[0] + '-' + i;
+      var cb = h('input', { type: 'checkbox', id: 'i-' + id + '-' + k, checked: saved[k] ? true : null });
+      cb.addEventListener('change', function () { if (cb.checked) saved[k] = 1; else delete saved[k]; persist(); });
+      boxes.push(cb);
+      return h('div', { class: 'check-row' }, cb, h('label', { for: cb.id }, rich(text)));
+    });
+    return h('section', { class: 'sheet' }, h('h3', null, (pi + 1) + '. ' + p[1]), h('div', null, rows));
+  });
+  var reset = h('button', { class: 'btn small', type: 'button' }, 'Clear the ticks');
+  reset.addEventListener('click', function () {
+    saved = {};
+    boxes.forEach(function (b) { b.checked = false; });
+    persist();
+  });
+  var out = h('div', { class: 'checklist' },
+    h('p', { class: 'muted' }, rich(g.intro)),
+    h('div', { class: 'meter', role: 'progressbar', 'aria-label': 'Steps ticked' }, fill), txt,
+    h('section', { class: 'sheet danger' }, h('h3', null, 'Safety first'), h('ul', null, g.safety.map(function (s2) { return h('li', null, rich(s2)); }))),
+    h('section', { class: 'sheet' }, h('h3', null, 'Tools and items to take'), h('ul', null, g.tools.map(function (s2) { return h('li', null, rich(s2)); }))),
+    sections,
+    h('div', { class: 'btn-row no-print' },
+      h('button', { class: 'btn', type: 'button', onclick: function () { window.print(); } }, icon('print', 18), 'Print this checklist'), reset,
+      withButtons || null));
+  progress();
+  return out;
+}
+
 export function install(params) {
   var id = params[0];
   var info = data.deviceInfo(id);
@@ -226,52 +272,53 @@ export function install(params) {
   setTitle('Installing: ' + info.title);
   var holder = h('div', null, crumb('#/devices/' + id, info.title), loading());
   data.loadInstall(id).then(function (g) {
-    var saved = store.get('kv', instKey(id)) || {};
-    var total = 0;
-    PHASES.forEach(function (p) { total += g[p[0]].length; });
-    var fill = h('i', null);
-    var txt = h('span', { class: 'muted small' });
-    var boxes = [];
-    function progress() {
-      var n = Object.keys(saved).length;
-      fill.style.width = Math.round(n / total * 100) + '%';
-      txt.textContent = n + ' of ' + total + ' steps ticked';
-    }
-    function persist() { store.set('kv', instKey(id), saved); progress(); }
-    function list(items) {
-      return h('div', null, items.map(function (t) { return h('div', { class: 'check-row' }, t.cb, h('label', { for: t.cb.id }, rich(t.text))); }));
-    }
-    var sections = PHASES.map(function (p, pi) {
-      var items = g[p[0]].map(function (text, i) {
-        var k = p[0] + '-' + i;
-        var cb = h('input', { type: 'checkbox', id: 'i-' + k, checked: saved[k] ? true : null });
-        cb.addEventListener('change', function () { if (cb.checked) saved[k] = 1; else delete saved[k]; persist(); });
-        boxes.push(cb);
-        return { cb: cb, text: text };
-      });
-      return h('section', { class: 'sheet' }, h('h2', null, (pi + 1) + '. ' + p[1]), list(items));
-    });
-    var reset = h('button', { class: 'btn small', type: 'button' }, 'Clear the ticks');
-    reset.addEventListener('click', function () {
-      saved = {};
-      boxes.forEach(function (b) { b.checked = false; });
-      persist();
-    });
-    var out = h('div', { class: 'reader' }, crumb('#/devices/' + id, info.title),
-      h('h1', null, 'Installing: ' + info.title),
-      h('p', { class: 'lede muted' }, rich(g.intro)),
-      h('div', { class: 'meter', role: 'progressbar', 'aria-label': 'Steps ticked' }, fill), txt,
-      h('section', { class: 'sheet danger' }, h('h2', null, 'Safety first'), h('ul', null, g.safety.map(function (s2) { return h('li', null, rich(s2)); }))),
-      h('section', { class: 'sheet' }, h('h2', null, 'Tools and items to take'), h('ul', null, g.tools.map(function (s2) { return h('li', null, rich(s2)); }))),
-      sections,
-      h('div', { class: 'btn-row no-print' },
-        h('button', { class: 'btn', type: 'button', onclick: function () { window.print(); } }, icon('print', 18), 'Print this checklist'),
-        reset,
-        h('a', { class: 'btn', href: '#/devices/' + id }, 'Faults for this device'),
-        h('a', { class: 'btn', href: lessonLink(g.lesson) }, 'Read: ' + data.lessonTitle(g.lesson))));
-    progress();
+    var out = h('div', { class: 'reader' }, crumb('#/devices/' + id, info.title), h('h1', null, 'Installing: ' + info.title),
+      checklistBody(id, g, [h('a', { class: 'btn', href: '#/devices/' + id }, 'Faults for this device'), h('a', { class: 'btn', href: lessonLink(g.lesson) }, 'Read: ' + data.lessonTitle(g.lesson))]));
     holder.replaceWith(out);
     holder = out;
   }).catch(function (e) { holder.replaceWith(failure(e)); });
   return holder;
+}
+
+/*
+ * What a lesson adds from the fault library and the installation guides: the faults whose lesson is this one,
+ * grouped by machine, and the installation checklist of any machine whose guide belongs to this lesson.
+ * Returns null when the lesson has nothing to add.
+ */
+export function lessonPanel(lessonId) {
+  var list = data.devices().filter(function (d) { return (d.lessons && d.lessons[lessonId]) || d.installLesson === lessonId; });
+  if (!list.length) return null;
+  var faultHolder = h('section', { class: 'lesson-faults' });
+  var instHolder = h('section', { class: 'lesson-faults' });
+  var faultDevices = list.filter(function (d) { return d.lessons && d.lessons[lessonId]; });
+  var installDevices = list.filter(function (d) { return d.installLesson === lessonId; });
+  if (faultDevices.length) {
+    faultHolder.appendChild(h('h2', null, 'Faults and remedies'));
+    faultHolder.appendChild(h('p', { class: 'muted small' }, 'Common faults this lesson helps you find and fix, by machine. Tap a fault to see its likely cause, the first check and the remedy.'));
+    faultDevices.forEach(function (d) {
+      var box = h('details', { class: 'devblock', open: faultDevices.length === 1 ? true : null });
+      box.appendChild(h('summary', null, h('span', null, d.title), h('span', { class: 'n' }, plural(d.lessons[lessonId], 'fault', 'faults')), icon('chevron', 16)));
+      var inner = h('div', { class: 'faultlist' }, loading());
+      box.appendChild(inner);
+      box.appendChild(h('p', { class: 'small' }, h('a', { href: '#/devices/' + d.id }, 'All ' + d.count + ' faults for ' + d.title.toLowerCase()), '  ·  ', h('a', { href: '#/devices/' + d.id + '/drill' }, 'Drill this device')));
+      faultHolder.appendChild(box);
+      data.loadDevice(d.id).then(function (dev) {
+        var mine = dev.faults.filter(function (f) { return f.lesson === lessonId; });
+        inner.replaceChildren(faultTable(mine));
+      }).catch(function (e) { inner.replaceChildren(failure(e)); });
+    });
+  }
+  if (installDevices.length) {
+    instHolder.appendChild(h('h2', null, 'Installation'));
+    instHolder.appendChild(h('p', { class: 'muted small' }, 'A checklist to follow on site. Tick each step as you do it. Your ticks are saved on this device.'));
+    installDevices.forEach(function (d) {
+      var box = h('details', { class: 'devblock', open: installDevices.length === 1 ? true : null });
+      box.appendChild(h('summary', null, h('span', null, 'Installing: ' + d.title), h('span', { class: 'n' }, plural(d.steps, 'step', 'steps')), icon('chevron', 16)));
+      var inner = h('div', null, loading());
+      box.appendChild(inner);
+      instHolder.appendChild(box);
+      data.loadInstall(d.id).then(function (g) { inner.replaceWith(checklistBody(d.id, g)); }).catch(function (e) { inner.replaceChildren(failure(e)); });
+    });
+  }
+  return h('div', null, faultDevices.length ? faultHolder : null, installDevices.length ? instHolder : null);
 }

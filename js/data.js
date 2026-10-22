@@ -80,6 +80,29 @@ export function loadDevice(id) {
   return pendingDevices[id];
 }
 
+var pendingErrors = null;
+
+/* Manufacturer error codes from data/errorcodes.js. */
+export function loadErrorCodes() {
+  if (window.OMM.errorCodes) return Promise.resolve(window.OMM.errorCodes);
+  if (pendingErrors) return pendingErrors;
+  pendingErrors = new Promise(function (resolve, reject) {
+    var s = document.createElement('script');
+    s.src = 'data/errorcodes.js';
+    s.async = true;
+    s.onload = function () {
+      if (window.OMM.errorCodes) resolve(window.OMM.errorCodes);
+      else { pendingErrors = null; reject(new Error('Error codes did not register')); }
+    };
+    s.onerror = function () {
+      pendingErrors = null;
+      reject(new Error('Could not load the error codes. Check your connection, or open the app once while online so it can save them for offline use.'));
+    };
+    document.head.appendChild(s);
+  });
+  return pendingErrors;
+}
+
 var pendingInstalls = {};
 
 /* The installation guide of one device, from data/install/<id>.js. */

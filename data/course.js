@@ -295,6 +295,10 @@
   root.OMM.registerDevice = function (d) {
     root.OMM.devices[d.id] = d;
   };
+  /* Manufacturer error codes live in data/errorcodes.js. */
+  root.OMM.registerErrorCodes = function (d) {
+    root.OMM.errorCodes = d;
+  };
   /* Installation guides live in data/install/<id>.js. */
   root.OMM.installs = root.OMM.installs || {};
   root.OMM.registerInstall = function (d) {

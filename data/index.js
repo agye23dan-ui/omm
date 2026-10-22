@@ -1147,7 +1147,21 @@ window.OMM.index = {
     "Consumables"
    ],
    "count": 24,
-   "steps": 31
+   "steps": 31,
+   "lessons": {
+    "m04-l3": 2,
+    "m04-l5": 1,
+    "m06-l5": 2,
+    "m12-l5": 7,
+    "m13-l5": 4,
+    "m07-l4": 2,
+    "m04-l4": 1,
+    "m05-l5": 1,
+    "m10-l6": 1,
+    "m09-l4": 1,
+    "m12-l6": 2
+   },
+   "installLesson": "m12-l6"
   },
   {
    "id": "inkjet",
@@ -1165,7 +1179,16 @@ window.OMM.index = {
     "Connection"
    ],
    "count": 16,
-   "steps": 29
+   "steps": 29,
+   "lessons": {
+    "m12-l3": 10,
+    "m04-l3": 2,
+    "m04-l4": 1,
+    "m12-l6": 1,
+    "m07-l4": 1,
+    "m10-l6": 1
+   },
+   "installLesson": "m12-l3"
   },
   {
    "id": "dotmatrix",
@@ -1181,7 +1204,14 @@ window.OMM.index = {
     "Electrical and mechanical"
    ],
    "count": 12,
-   "steps": 25
+   "steps": 25,
+   "lessons": {
+    "m12-l3": 9,
+    "m06-l5": 1,
+    "m04-l2": 1,
+    "m07-l4": 1
+   },
+   "installLesson": "m12-l3"
   },
   {
    "id": "receipt",
@@ -1197,7 +1227,14 @@ window.OMM.index = {
     "Power and mechanical"
    ],
    "count": 12,
-   "steps": 25
+   "steps": 25,
+   "lessons": {
+    "m15-l2": 9,
+    "m06-l5": 1,
+    "m15-l6": 1,
+    "m07-l4": 1
+   },
+   "installLesson": "m15-l2"
   },
   {
    "id": "copier",
@@ -1219,7 +1256,20 @@ window.OMM.index = {
     "Codes and maintenance"
    ],
    "count": 26,
-   "steps": 36
+   "steps": 36,
+   "lessons": {
+    "m04-l3": 1,
+    "m13-l5": 5,
+    "m14-l5": 1,
+    "m04-l5": 1,
+    "m13-l6": 5,
+    "m13-l4": 4,
+    "m13-l3": 3,
+    "m13-l7": 3,
+    "m07-l4": 2,
+    "m04-l6": 1
+   },
+   "installLesson": "m13-l7"
   },
   {
    "id": "mfp",
@@ -1237,7 +1287,20 @@ window.OMM.index = {
     "Panel and security"
    ],
    "count": 16,
-   "steps": 34
+   "steps": 34,
+   "lessons": {
+    "m10-l6": 1,
+    "m09-l6": 1,
+    "m14-l1": 2,
+    "m14-l3": 3,
+    "m12-l4": 1,
+    "m14-l5": 1,
+    "m10-l4": 1,
+    "m14-l2": 2,
+    "m14-l6": 3,
+    "m08-l4": 1
+   },
+   "installLesson": "m14-l6"
   },
   {
    "id": "fax",
@@ -1254,7 +1317,14 @@ window.OMM.index = {
     "Print and scan"
    ],
    "count": 12,
-   "steps": 28
+   "steps": 28,
+   "lessons": {
+    "m10-l4": 5,
+    "m14-l2": 5,
+    "m14-l5": 1,
+    "m15-l2": 1
+   },
+   "installLesson": "m14-l2"
   },
   {
    "id": "scanner",
@@ -1271,7 +1341,14 @@ window.OMM.index = {
     "Connection and software"
    ],
    "count": 12,
-   "steps": 25
+   "steps": 25,
+   "lessons": {
+    "m12-l4": 7,
+    "m04-l4": 1,
+    "m14-l5": 2,
+    "m09-l4": 2
+   },
+   "installLesson": "m12-l4"
   },
   {
    "id": "finisher",
@@ -1287,7 +1364,12 @@ window.OMM.index = {
     "Punch and booklet"
    ],
    "count": 13,
-   "steps": 25
+   "steps": 25,
+   "lessons": {
+    "m14-l4": 12,
+    "m14-l6": 1
+   },
+   "installLesson": "m14-l4"
   },
   {
    "id": "monitor",
@@ -1302,7 +1384,13 @@ window.OMM.index = {
     "Connection"
    ],
    "count": 10,
-   "steps": 22
+   "steps": 22,
+   "lessons": {
+    "m12-l4": 7,
+    "m07-l4": 2,
+    "m11-l3": 1
+   },
+   "installLesson": "m12-l4"
   },
   {
    "id": "pc",
@@ -1321,7 +1409,17 @@ window.OMM.index = {
     "Drivers and peripherals"
    ],
    "count": 17,
-   "steps": 31
+   "steps": 31,
+   "lessons": {
+    "m11-l3": 6,
+    "m09-l6": 4,
+    "m11-l6": 1,
+    "m11-l4": 2,
+    "m09-l2": 1,
+    "m09-l5": 2,
+    "m09-l4": 1
+   },
+   "installLesson": "m11-l2"
   },
   {
    "id": "network",
@@ -1338,7 +1436,16 @@ window.OMM.index = {
     "Telephone and fax links"
    ],
    "count": 14,
-   "steps": 27
+   "steps": 27,
+   "lessons": {
+    "m10-l3": 3,
+    "m10-l6": 1,
+    "m10-l1": 3,
+    "m10-l5": 3,
+    "m10-l2": 2,
+    "m10-l4": 2
+   },
+   "installLesson": "m10-l3"
   },
   {
    "id": "pos",
@@ -1356,7 +1463,15 @@ window.OMM.index = {
     "Network"
    ],
    "count": 17,
-   "steps": 29
+   "steps": 29,
+   "lessons": {
+    "m15-l2": 3,
+    "m15-l4": 5,
+    "m15-l6": 6,
+    "m07-l4": 1,
+    "m15-l5": 2
+   },
+   "installLesson": "m15-l4"
   },
   {
    "id": "barcode",
@@ -1371,7 +1486,12 @@ window.OMM.index = {
     "Scales"
    ],
    "count": 12,
-   "steps": 26
+   "steps": 26,
+   "lessons": {
+    "m15-l3": 9,
+    "m15-l6": 3
+   },
+   "installLesson": "m15-l3"
   },
   {
    "id": "atm",
@@ -1388,9 +1508,44 @@ window.OMM.index = {
     "Security and handling"
    ],
    "count": 15,
-   "steps": 30
+   "steps": 30,
+   "lessons": {
+    "m18-l3": 3,
+    "m18-l2": 4,
+    "m18-l5": 2,
+    "m18-l4": 5,
+    "m18-l6": 1
+   },
+   "installLesson": "m18-l6"
   }
  ],
+ "errors": {
+  "total": 96,
+  "brands": [
+   "HP",
+   "Canon",
+   "Brother",
+   "Ricoh",
+   "Xerox",
+   "Epson"
+  ],
+  "lessons": {
+   "m12-l5": 12,
+   "m13-l5": 11,
+   "m14-l6": 12,
+   "m14-l2": 6,
+   "m14-l5": 2,
+   "m10-l6": 21,
+   "m12-l6": 11,
+   "m05-l5": 2,
+   "m04-l6": 2,
+   "m04-l3": 3,
+   "m13-l6": 1,
+   "m13-l7": 11,
+   "m08-l4": 2
+  },
+  "lookupLesson": "m02-l4"
+ },
  "totals": {
   "lessons": 109,
   "minutes": 992,

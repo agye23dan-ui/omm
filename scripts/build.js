@@ -82,12 +82,23 @@ function buildIndex() {
   var devices = (course.devices || []).map(function (d) {
     var f = res.devices[d.id];
     totals.faults += f.faults.length;
-    return { id: d.id, title: d.title, blurb: d.blurb, modules: d.modules, groups: f.groups, count: f.faults.length, steps: INSTALL_COUNT(res.installs[d.id]) };
+    var lessonsMap = {};
+    f.faults.forEach(function (x) { lessonsMap[x[5]] = (lessonsMap[x[5]] || 0) + 1; });
+    return { id: d.id, title: d.title, blurb: d.blurb, modules: d.modules, groups: f.groups, count: f.faults.length, steps: INSTALL_COUNT(res.installs[d.id]), lessons: lessonsMap, installLesson: res.installs[d.id].lesson };
   });
+  var errorInfo = { total: 0, brands: [], lessons: {}, lookupLesson: 'm02-l4' };
+  if (res.errorCodes) {
+    res.errorCodes.codes.forEach(function (r) {
+      errorInfo.total++;
+      if (errorInfo.brands.indexOf(r[0]) === -1) errorInfo.brands.push(r[0]);
+      errorInfo.lessons[r[6]] = (errorInfo.lessons[r[6]] || 0) + 1;
+    });
+  }
   var out = {
     order: order,
     modules: modules,
     devices: devices,
+    errors: errorInfo,
     totals: totals,
     examPool: totals.quiz
   };
@@ -95,7 +106,7 @@ function buildIndex() {
     'window.OMM = window.OMM || {};\n' +
     'window.OMM.index = ' + JSON.stringify(out, null, 1) + ';\n';
   fs.writeFileSync(path.join(ROOT, 'data/index.js'), src);
-  console.log('data/index.js  ' + order.length + ' modules, ' + totals.quiz + ' questions, ' + totals.cards + ' cards, ' + totals.cases + ' diagnosis cases, ' + totals.faults + ' device faults, ' + totals.minutes + ' min of lessons');
+  console.log('data/index.js  ' + order.length + ' modules, ' + totals.quiz + ' questions, ' + totals.cards + ' cards, ' + totals.cases + ' diagnosis cases, ' + totals.faults + ' device faults, ' + errorInfo.total + ' error codes, ' + totals.minutes + ' min of lessons');
   return out;
 }
 

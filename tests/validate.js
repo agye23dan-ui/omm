@@ -130,7 +130,17 @@ function load(ids) {
   });
   devices = JSON.parse(vm.runInContext('JSON.stringify(OMM.devices)', ctx));
   var installs = JSON.parse(vm.runInContext('JSON.stringify(OMM.installs)', ctx));
-  return { course: course, modules: modules, cases: cases, devices: devices, installs: installs, ids: ids, loadErrors: loadErrors };
+  var errorCodes = null;
+  var efile = path.join(ROOT, 'data/errorcodes.js');
+  if (fs.existsSync(efile)) {
+    try {
+      vm.runInContext(fs.readFileSync(efile, 'utf8'), ctx, { filename: 'data/errorcodes.js' });
+      errorCodes = JSON.parse(vm.runInContext('JSON.stringify(OMM.errorCodes || null)', ctx));
+    } catch (e) {
+      loadErrors.push('errorcodes: could not run data/errorcodes.js: ' + e.message);
+    }
+  }
+  return { course: course, modules: modules, cases: cases, devices: devices, installs: installs, errorCodes: errorCodes, ids: ids, loadErrors: loadErrors };
 }
 
 function words(s) {
@@ -547,6 +557,35 @@ function validateInstall(d, id, lessonSet) {
   return { errors: errors, warnings: warnings, n: n };
 }
 
+/* Manufacturer error codes: data/errorcodes.js. Rows are [brand, kind, code, appliesTo, meaning, remedy, lesson, source]. */
+function validateErrorCodes(d, lessonSet) {
+  var errors = [];
+  var warnings = [];
+  function err(msg) { errors.push('errorcodes: ' + msg); }
+  function warn(msg) { warnings.push('errorcodes: ' + msg); }
+  if (!d || !Array.isArray(d.codes) || !Array.isArray(d.lookups)) { err('needs codes and lookups lists'); return { errors: errors, warnings: warnings, n: 0 }; }
+  var seen = {};
+  d.codes.forEach(function (r, i) {
+    var w = 'row ' + (i + 1);
+    if (!Array.isArray(r) || r.length !== 8) { err(w + ': needs [brand, kind, code, appliesTo, meaning, remedy, lesson, source]'); return; }
+    var spec = [['brand', 0, 24, 2], ['kind', 1, 24, 3], ['code', 2, 90, 1], ['appliesTo', 3, 110, 5], ['meaning', 4, 300, 10], ['remedy', 5, 400, 10]];
+    spec.forEach(function (s) {
+      if (!isStr(r[s[1]]) || r[s[1]].length > s[2] || r[s[1]].length < s[3]) err(w + ': ' + s[0] + ' missing or not ' + s[3] + ' to ' + s[2] + ' characters');
+      else textProblems(r[s[1]], w + ' ' + s[0], err, warn);
+    });
+    if (!isStr(r[6]) || !lessonSet[r[6]]) err(w + ': lesson "' + r[6] + '" does not exist');
+    if (!isStr(r[7]) || !/^https?:\/\/[^ ]+$/.test(r[7])) err(w + ': source must be a web address');
+    var key = (r[0] + '|' + r[2] + '|' + r[3]).toLowerCase();
+    if (seen[key]) err(w + ': same brand, code and family as row ' + seen[key]); else seen[key] = i + 1;
+  });
+  d.lookups.forEach(function (l, i) {
+    var w = 'lookup ' + (i + 1);
+    if (!Array.isArray(l) || l.length !== 3) { err(w + ': needs [brand, where, tip]'); return; }
+    l.forEach(function (x, k) { if (!isStr(x) || x.length > 220) err(w + ': item ' + (k + 1) + ' missing or over 220 characters'); else textProblems(x, w, err, warn); });
+  });
+  return { errors: errors, warnings: warnings, n: d.codes.length };
+}
+
 function run(ids) {
   var loaded = load(ids);
   var errors = loaded.loadErrors.slice();
@@ -583,14 +622,24 @@ function run(ids) {
       warnings = warnings.concat(ir.warnings);
     });
   }
-  return { errors: errors, warnings: warnings, summary: summary, course: loaded.course, modules: loaded.modules, cases: loaded.cases, devices: loaded.devices, installs: loaded.installs, deviceCounts: deviceCounts };
+  var errorCount = 0;
+  if ((!ids || !ids.length) && loaded.errorCodes) {
+    var lset = {};
+    Object.keys(loaded.modules).forEach(function (mid) { (loaded.modules[mid].lessons || []).forEach(function (l) { lset[l.id] = true; }); });
+    var er = validateErrorCodes(loaded.errorCodes, lset);
+    errors = errors.concat(er.errors);
+    warnings = warnings.concat(er.warnings);
+    errorCount = er.n;
+  }
+  return { errors: errors, warnings: warnings, summary: summary, course: loaded.course, modules: loaded.modules, cases: loaded.cases, devices: loaded.devices, installs: loaded.installs, errorCodes: loaded.errorCodes, errorCount: errorCount, deviceCounts: deviceCounts };
 }
 
-module.exports = { run: run, validateModule: validateModule, validateCases: validateCases, validateDevice: validateDevice, validateInstall: validateInstall, load: load };
+module.exports = { run: run, validateModule: validateModule, validateCases: validateCases, validateDevice: validateDevice, validateInstall: validateInstall, validateErrorCodes: validateErrorCodes, load: load };
 
 if (require.main === module) {
   var ids = process.argv.slice(2);
   var res = run(ids);
+  if (res.errorCount) console.log('error codes  rows ' + res.errorCount);
   Object.keys(res.deviceCounts || {}).forEach(function (k) { console.log('device ' + k + '  faults ' + res.deviceCounts[k]); });
   res.summary.forEach(function (s) {
     var st = s.stats;

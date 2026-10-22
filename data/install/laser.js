@@ -1,7 +1,7 @@
 OMM.registerInstall({
   "id": "laser",
   "intro": "Install a laser printer so it is safe, reachable on the network and printing correctly before you leave. Follow the manufacturer's installation guide for the model.",
-  "lesson": "m13-l7",
+  "lesson": "m12-l6",
   "tools": [
     "Screwdrivers, including the types the printer uses",
     "Lint-free cloth and approved cleaner",

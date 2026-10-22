@@ -1,7 +1,7 @@
 /* Service worker. Generated into sw.js by scripts/build.js, which fills in VERSION and FILES. */
 'use strict';
 
-var VERSION = '9db955a9f42a';
+var VERSION = '170780592f3e';
 var CACHE = 'omm-' + VERSION;
 var FILES = [
   "css/app.css",
@@ -40,6 +40,7 @@ var FILES = [
   "data/devices/pos.js",
   "data/devices/receipt.js",
   "data/devices/scanner.js",
+  "data/errorcodes.js",
   "data/index.js",
   "data/install/atm.js",
   "data/install/barcode.js",
@@ -106,6 +107,7 @@ var FILES = [
   "js/views/cards.js",
   "js/views/devices.js",
   "js/views/diagnose.js",
+  "js/views/errorcodes.js",
   "js/views/exam.js",
   "js/views/learn.js",
   "js/views/modnav.js",

@@ -1,7 +1,7 @@
 OMM.registerInstall({
   "id": "finisher",
   "intro": "Fit a finisher to a copier or multifunction product so it docks correctly, aligns paper, staples and stacks reliably, and the copier recognises it.",
-  "lesson": "m14-l6",
+  "lesson": "m14-l4",
   "tools": [
     "Screwdrivers and the installation kit supplied with the finisher",
     "Staple cartridges and the staple tool",
