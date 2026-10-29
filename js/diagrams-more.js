@@ -6,5 +6,6 @@ import './dg-foundations.js';
 import './dg-electronics.js';
 import './dg-machines.js';
 import './dg-practice.js';
+import './dg-real.js';
 
 export { hasDiagram, diagram, DIAGRAMS } from './diagrams.js';
