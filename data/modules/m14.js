@@ -632,6 +632,107 @@ OMM.registerModule({
           "text": "Show the customer the new option working, and print a test page, so they see the result. Note down who you showed."
         }
       ]
+    },
+    {
+      "id": "m14-l7",
+      "title": "Shredders and document destruction",
+      "minutes": 10,
+      "body": [
+        {
+          "t": "p",
+          "text": "This lesson covers paper shredders: the machines that destroy confidential papers, how they are rated, and how to find and repair their faults. A **shredder** feeds paper between two cutter shafts that turn towards each other and tear it into strips or small particles."
+        },
+        {
+          "t": "h",
+          "text": "Types and security levels"
+        },
+        {
+          "t": "table",
+          "head": [
+            "Type",
+            "Cut",
+            "Typical use"
+          ],
+          "rows": [
+            [
+              "Strip-cut",
+              "Long strips, about 6 mm wide",
+              "General paper, low security"
+            ],
+            [
+              "Cross-cut",
+              "Small rectangles, about 4 by 40 mm",
+              "Most offices, medium security"
+            ],
+            [
+              "Micro-cut",
+              "Tiny pieces, about 2 by 15 mm",
+              "Confidential records, high security"
+            ]
+          ],
+          "caption": "Sizes are typical. The maker's rating gives the exact size."
+        },
+        {
+          "t": "p",
+          "text": "The security level is set by the standard **DIN 66399**, from P-1 (coarse) to P-7 (finest). Strip-cut machines are usually P-2, cross-cut machines P-3 or P-4, and micro-cut machines P-5 or finer. A smaller particle is harder to put back together, but it needs a stronger motor and wears the cutters faster."
+        },
+        {
+          "t": "h",
+          "text": "Parts and how it works"
+        },
+        {
+          "t": "ul",
+          "items": [
+            "**Feed sensor**: an optical or infrared sensor that sees paper in the slot and starts the motor.",
+            "**Motor and gear train**: a single-phase motor, often with a start capacitor, drives the gears that turn both cutter shafts.",
+            "**Cutter shafts**: two shafts of hardened steel discs that mesh like fingers. They pull the paper in and cut it.",
+            "**Reverse and auto-reverse**: the motor runs backwards for a moment to free a jam.",
+            "**Thermal cut-out**: a switch that stops the motor when it overheats and resets when it cools.",
+            "**Bin and safety switches**: a bin-full sensor, and a switch that stops the machine when the head or door is open."
+          ]
+        },
+        {
+          "t": "diagram",
+          "name": "shredder-cutters"
+        },
+        {
+          "t": "p",
+          "text": "Most shredders have a **duty cycle**, for example 10 minutes of shredding followed by 30 minutes of rest. Running past it trips the thermal cut-out."
+        },
+        {
+          "t": "h",
+          "text": "Faults, care and safety"
+        },
+        {
+          "t": "p",
+          "text": "Most faults come from the paper, not the machine. Paper clips, staples, thick card and damp paper jam the cutters. Paper dust builds up and fools the sensors. A machine that needs oil runs hot and slow when it is dry."
+        },
+        {
+          "t": "note",
+          "kind": "safety",
+          "text": "Unplug the shredder before you reach into the feed slot or lift the head. The cutters can grip a finger, a tie or loose clothing in a moment. A safety switch is never a reason to work with the mains connected."
+        },
+        {
+          "t": "example",
+          "title": "How long will a job take?",
+          "steps": [
+            "A shredder feeds 2.5 metres of paper a minute and takes 8 sheets at a time. An A4 sheet is 0.297 m long.",
+            "Time for one pass = 0.297 ÷ 2.5 = 0.119 minutes, about 7 seconds.",
+            "A job of 400 sheets needs 400 ÷ 8 = 50 passes, so 50 × 7 = 350 seconds, about 6 minutes.",
+            "With a 10-minute duty cycle this job fits. Two jobs one after the other would not, so the motor must rest in between."
+          ]
+        },
+        {
+          "t": "note",
+          "kind": "tip",
+          "text": "Oil the cutters only with the oil or lubricating sheets the maker names. General-purpose spray can clog the cutters and soften the plastic."
+        },
+        {
+          "t": "note",
+          "kind": "key",
+          "text": "A shredder that trips its thermal cut-out has been overworked or is jammed. Check the paper and the duty cycle before you blame the motor."
+        }
+      ]
     }
   ],
   "practical": {
@@ -1181,6 +1282,62 @@ OMM.registerModule({
       "level": 2,
       "lesson": "m14-l6",
       "explain": "Fitting an option with power on is unsafe and can damage boards, so power is off first. Enabling and testing come after fitting, so any order that enables first cannot be right."
+    },
+    {
+      "id": "m14-q37",
+      "q": "What does the security level of a shredder describe?",
+      "options": [
+        "How fast the motor turns the cutter shafts",
+        "How many sheets the machine takes in one pass",
+        "How loud the machine is while it is shredding",
+        "How small the pieces are that the paper is cut into"
+      ],
+      "answer": 3,
+      "level": 1,
+      "lesson": "m14-l7",
+      "explain": "The security level, for example P-4 or P-5 under DIN 66399, gives the size of the pieces left after shredding. Smaller pieces are harder to put back together. Speed, capacity and noise are separate specifications."
+    },
+    {
+      "id": "m14-q38",
+      "q": "A shredder stops in the middle of a big job and starts again by itself after half an hour. What is the most likely reason?",
+      "options": [
+        "The feed sensor has failed and cannot see the paper",
+        "The thermal cut-out tripped because the duty cycle was exceeded",
+        "The bin-full switch is stuck in the open position",
+        "The cutter shafts have worn out and need to be replaced"
+      ],
+      "answer": 1,
+      "level": 2,
+      "lesson": "m14-l7",
+      "explain": "A thermal cut-out stops the motor when it overheats and resets when it cools. A machine that restarts itself after a rest was overworked. A failed sensor or a worn cutter would not cure itself after waiting."
+    },
+    {
+      "id": "m14-q39",
+      "q": "A shredder feeds 3 metres of paper a minute and takes 10 A4 sheets at a time. An A4 sheet is 0.297 m long. About how long will 300 sheets take?",
+      "options": [
+        "About 1 minute",
+        "About 2 minutes",
+        "About 3 minutes",
+        "About 9 minutes"
+      ],
+      "answer": 2,
+      "level": 3,
+      "lesson": "m14-l7",
+      "explain": "One pass takes 0.297 ÷ 3 = 0.099 minutes, about 6 seconds. 300 sheets at 10 per pass is 30 passes, so 30 × 6 = 180 seconds, about 3 minutes. Check the result against the duty cycle."
+    },
+    {
+      "id": "m14-q40",
+      "q": "Why must you unplug a shredder before you clear a jam from the feed slot?",
+      "options": [
+        "The sensor can start the cutters and grip your fingers",
+        "The paper dust inside can ignite if it is touched",
+        "The thermal cut-out is reset only by pulling the plug",
+        "The motor keeps a high voltage even when it is off"
+      ],
+      "answer": 0,
+      "level": 2,
+      "lesson": "m14-l7",
+      "explain": "The feed sensor starts the motor when it sees paper or a hand, and the cutters can grip a finger in a moment. Removing the plug is the only way to be sure the machine cannot start while you work."
     }
   ],
   "cards": [
@@ -1351,6 +1508,36 @@ OMM.registerModule({
       "front": "What should a service report contain?",
       "back": "Machine and counter, fault, cause, action, parts, tests and results, and anything the customer must do.",
       "lesson": "m14-l6"
+    },
+    {
+      "id": "m14-c29",
+      "front": "Shredder cutter shafts",
+      "back": "Two shafts of hardened steel discs that turn towards each other, mesh like fingers and tear the paper into strips or particles.",
+      "lesson": "m14-l7"
+    },
+    {
+      "id": "m14-c30",
+      "front": "Strip-cut, cross-cut and micro-cut",
+      "back": "Strips about 6 mm wide, small rectangles about 4 by 40 mm, and tiny pieces about 2 by 15 mm. Each step is harder to put back together.",
+      "lesson": "m14-l7"
+    },
+    {
+      "id": "m14-c31",
+      "front": "What is DIN 66399?",
+      "back": "The standard that rates shredder security from P-1 (coarse) to P-7 (finest), by the size of the pieces left.",
+      "lesson": "m14-l7"
+    },
+    {
+      "id": "m14-c32",
+      "front": "Shredder duty cycle",
+      "back": "How long the machine may run before it must rest, for example 10 minutes on and 30 off. Going over it trips the thermal cut-out.",
+      "lesson": "m14-l7"
+    },
+    {
+      "id": "m14-c33",
+      "front": "Why does a shredder auto-reverse?",
+      "back": "The motor runs backwards for a moment to push paper back out of a jam, so the user can remove it without opening the machine.",
+      "lesson": "m14-l7"
     }
   ]
 });

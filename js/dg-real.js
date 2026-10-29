@@ -224,3 +224,49 @@ reg('paper-path', 'Side view of a typical paper path. Most jams happen where the
   return S(480, 460, 'Paper path side view',
     'Paper leaves a tray at the lower left, passes feed rollers, registration rollers, the drum and transfer roller, a fuser and exit rollers at the upper right. Five jam zones, A to E, are marked.', b);
 });
+
+/* ---------------- Shredder cutters ---------------- */
+reg('shredder-cutters', 'Two cutter shafts turn towards each other and pull the paper down between their discs. Strips fall into the bin. A feed sensor starts the motor, a thermal cut-out protects it, and a switch stops the cutters when the head is lifted.', function () {
+  function cutter(cx, cy, r, n, rot) {
+    var d = '', i, a0, a1;
+    for (i = 0; i < n; i++) {
+      a0 = rot + i / n * 360; a1 = rot + (i + 0.5) / n * 360;
+      var p = function (a, rr) { var q = a * Math.PI / 180; return (cx + Math.cos(q) * rr).toFixed(1) + ' ' + (cy + Math.sin(q) * rr).toFixed(1); };
+      d += (i ? 'L' : 'M') + p(a0, r - 5) + 'L' + p(a0 + 3, r + 4) + 'L' + p(a1 - 3, r + 4) + 'L' + p(a1, r - 5);
+    }
+    return '<path d="' + d + 'Z" style="fill:url(#omMetal);stroke:#3b4148;stroke-width:1.2"/>' + C(cx, cy, r - 12, 'url(#omDark)', '#1f2327', 1) + C(cx, cy, 5, 'url(#omMetal)', '#3b4148', 1);
+  }
+  var b = '';
+  // head housing and the slot
+  b += R(130, 8, 220, 130, 10, '#e4e8ec', '#8d96a0', 1.4).replace('fill:#e4e8ec', 'fill:#e4e8ec;fill-opacity:.55');
+  b += R(214, 12, 52, 10, 3, '#14161a', '#14161a', 1);
+  // feed sensor: emitter and receiver either side of the slot
+  b += R(190, 20, 18, 14, 2, '#6fd1a8', '#2a8a62', 1.2) + R(272, 20, 18, 14, 2, '#6fd1a8', '#2a8a62', 1.2) + '<path d="M208 27H272" stroke="#e0383a" stroke-width="1.6" stroke-dasharray="3 3"/>';
+  // paper going in
+  b += '<path d="M240 2V66" stroke="#1d2024" stroke-width="6" stroke-linecap="round"/><path d="M240 2V66" stroke="#fff" stroke-width="4" stroke-linecap="round"/>' + '<path d="M240 40l-5 -7M240 40l5 -7" stroke="#59626b" stroke-width="2" fill="none"/>';
+  // two cutter drums, meshing
+  b += cutter(214, 98, 30, 12, 0) + cutter(266, 98, 30, 12, 15);
+  b += '<path d="M200 70A22 22 0 0 1 228 70" fill="none" stroke="#fff" stroke-width="2" marker-end="url(#ar)" opacity=".9"/>';
+  // strips falling
+  [210, 222, 234, 246, 258, 270].forEach(function (x, i) { b += '<rect x="' + (x - 1.5) + '" y="' + (136 + (i % 2) * 8) + '" width="3" height="22" rx="1.5" fill="#f4f4f0" stroke="#8d96a0" stroke-width=".8"/>'; });
+  // bin with shreds
+  b += R(150, 168, 180, 110, 6, '#d5dce2', '#59626b', 1.5).replace('fill:#d5dce2', 'fill:#d5dce2;fill-opacity:.55');
+  for (var k = 0; k < 40; k++) b += '<rect x="' + (158 + (k * 29) % 160) + '" y="' + (236 + (k * 17) % 34) + '" width="10" height="2.4" rx="1.2" fill="#f4f4f0" stroke="#8d96a0" stroke-width=".6" transform="rotate(' + ((k * 41) % 180) + ' ' + (163 + (k * 29) % 160) + ' ' + (237 + (k * 17) % 34) + ')"/>';
+  b += R(300, 176, 16, 22, 3, '#6fd1a8', '#2a8a62', 1.2);
+  // motor and gears on the right
+  b += R(372, 70, 92, 54, 8, 'url(#omDark)', '#1f2327', 1.4) + '<path d="M388 78V116M402 78V116M416 78V116M430 78V116M444 78V116" stroke="#8d96a0" stroke-width="1" opacity=".5"/>' + C(452, 98, 0.1, '#fff');
+  b += cutter(334, 108, 16, 9, 0).replace('url(#omMetal)', 'url(#omMetal)') + '<path d="M350 108H372" stroke="#59626b" stroke-width="5"/>';
+  // thermal cut-out on the motor and the head safety switch
+  b += R(396, 52, 28, 16, 3, '#f0cf4a', '#8a6a22', 1.2) + R(318, 134, 24, 14, 3, 'url(#omDark)', '#1f2327', 1.2) + '<path d="M330 134V126" stroke="#59626b" stroke-width="2.4"/>';
+  // labels
+  b += t(240, 192 + 100, 'Bin', 'tsm', 'middle').replace('y="292"', 'y="294"');
+  b += lines(8, 24, ['Feed sensor', 'starts the motor'], 'tsm', 'start', 14) + lead('M92 30H186');
+  b += lines(8, 100, ['Cutter shafts', 'turn towards each', 'other'], 'tsm', 'start', 14) + lead('M92 106H182');
+  b += lines(8, 176, ['Strips fall', 'into the bin'], 'tsm', 'start', 14) + lead('M72 182H146');
+  b += lines(376, 22, ['Thermal', 'cut-out'], 'tsm', 'start', 14) + lead('M410 40V52');
+  b += lines(366, 150, ['Motor and', 'gear train'], 'tsm', 'start', 14);
+  b += lines(346, 190, ['Head switch'], 'tsm', 'start', 14) + lead('M342 144L352 180');
+  b += lines(340, 224, ['Bin-full', 'sensor'], 'tsm', 'start', 14) + lead('M316 192L336 220');
+  return S(480, 300, 'Shredder cutter section',
+    'A side section of a shredder: paper enters a slot where a feed sensor sees it, passes between two meshing cutter drums that turn towards each other, and falls as strips into a bin with a bin-full sensor. A motor and gear train drive the cutters, with a thermal cut-out and a head safety switch.', b);
+});

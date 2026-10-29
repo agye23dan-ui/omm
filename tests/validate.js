@@ -60,6 +60,7 @@ var DIAGRAM_HOMES = {
   'mfp-structure': ['m14'],
   'scan-to-flow': ['m14'],
   'finisher-path': ['m14'],
+  'shredder-cutters': ['m14'],
   'receipt-printer-parts': ['m15'],
   'drawer-signal': ['m15'],
   'ean13': ['m15'],

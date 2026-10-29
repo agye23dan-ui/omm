@@ -857,12 +857,17 @@ window.OMM.index = {
      "id": "m14-l6",
      "title": "Peripherals, options and service",
      "minutes": 10
+    },
+    {
+     "id": "m14-l7",
+     "title": "Shredders and document destruction",
+     "minutes": 10
     }
    ],
-   "minutes": 60,
-   "words": 3196,
-   "quiz": 36,
-   "cards": 28,
+   "minutes": 70,
+   "words": 3658,
+   "quiz": 40,
+   "cards": 33,
    "cases": [
     {
      "id": "m14-d1",
@@ -1372,6 +1377,26 @@ window.OMM.index = {
    "installLesson": "m14-l4"
   },
   {
+   "id": "shredder",
+   "title": "Paper shredders",
+   "blurb": "Strip-cut, cross-cut and micro-cut shredders for confidential paper.",
+   "modules": [
+    "m14"
+   ],
+   "groups": [
+    "Feeding and jams",
+    "Motor and power",
+    "Cutters and bin",
+    "Safety devices"
+   ],
+   "count": 14,
+   "steps": 24,
+   "lessons": {
+    "m14-l7": 14
+   },
+   "installLesson": "m14-l7"
+  },
+  {
    "id": "monitor",
    "title": "Monitors and displays",
    "blurb": "LCD and LED-backlit monitors.",
@@ -1547,13 +1572,13 @@ window.OMM.index = {
   "lookupLesson": "m02-l4"
  },
  "totals": {
-  "lessons": 109,
-  "minutes": 992,
-  "quiz": 647,
-  "cards": 538,
-  "words": 50256,
+  "lessons": 110,
+  "minutes": 1002,
+  "quiz": 651,
+  "cards": 543,
+  "words": 50718,
   "cases": 54,
-  "faults": 228
+  "faults": 242
  },
- "examPool": 647
+ "examPool": 651
 };
